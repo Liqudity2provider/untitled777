@@ -1,15 +1,8 @@
-<!-- chat/templates/chat/room.html -->
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>Chat Room</title>
-</head>
-
-<body>
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section">
     <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
+    <input class="mb-2" id="chat-message-input" type="text"><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ room_name|json_script:"room-name" }}
     <script>
@@ -48,6 +41,5 @@
             messageInputDom.value = '';
         };
     </script>
-</body>
-
-</html>
+</div>
+{% endblock %}

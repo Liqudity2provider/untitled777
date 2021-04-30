@@ -1,15 +1,9 @@
-<!-- chat/templates/chat/index.html -->
-<!DOCTYPE html>
-<html>
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section">
 
-<head>
-    <meta charset="utf-8" />
-    <title>Chat Rooms</title>
-</head>
-
-<body>
     What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
+    <input class="mb-2" id="room-name-input" type="text"><br>
     <input id="room-name-submit" type="button" value="Enter">
 
     <script>
@@ -25,6 +19,5 @@
             window.location.pathname = '/chat/' + roomName + '/';
         };
     </script>
-</body>
-
-</html>
+</div>
+{% endblock %}
