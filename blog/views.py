@@ -5,12 +5,12 @@ from .models import Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
-def home(requst):
+def home(request):
     Post.objects.all()
     context = {
         'posts': Post.objects.all(),
     }
-    return render(requst, 'blog/home.html', context)
+    return render(request, 'blog/home.html', context)
 
 
 class PostListView(ListView):
