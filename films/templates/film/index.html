@@ -1,0 +1,23 @@
+{% extends "film/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <ul>
+            {% for i in data_films %}
+                <li>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ i.image }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.name }}</h5>
+
+                            <p class="card-text">Жанр - {{ i.genres.all|join:", " }}</p>
+
+                            <p class="card-text">Рейтинг - {{ i.rating }}</p>
+                            <a href="{{ i.link }}" class="btn btn-primary">Смотреть</a>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
