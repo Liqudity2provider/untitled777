@@ -1,4 +1,4 @@
-<!--{% load static %}-->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <!--    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">-->
+    {#<!--    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">-->#}
     <style>
         body {
             background: #fafafa;
@@ -49,6 +49,7 @@
             border: 1px solid #dddddd;
             border-radius: 3px;
             margin-bottom: 20px;
+            width: 135%;
         }
 
         .article-title {
@@ -102,18 +103,23 @@
             color: #5e1a13;
         }
 
+        img {
+            width: 250px;
+        }
+
+        li {
+            display: inline-block;
+        }
+
     </style>
-    {% if title %}
-    <title>Django Blog - {{ title }}</title>
-    {% else %}
-    <title>Django Blog</title>
-    {% endif %}
+
 </head>
 <body>
+
 <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-            <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+            <a class="navbar-brand mr-4" href="{% url 'index' params="None" %}">Django Blog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -121,55 +127,50 @@
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-                    <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+
+                    <div class="dropdown">
+                        <button class="btn mr-4 btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Выбрать жанр
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% if genres %}
+                                {% for genre in genres %}
+                                    <a class="dropdown-item"
+                                       href="{% url 'index' params=genre.name %}">{{ genre.name }}</a>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="{% url 'chat_entry' %}">Chat</a>
+                    <a href="{% url 'search' %}" class="nav-item nav-link" id="btn1">Поиск</a>
 
-                    {% if not user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-                    {% else %}
-                    <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">My Account</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 </header>
+
 <main role="main" class="container">
     <div class="row">
         <div class="col-md-8">
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
             {% endif %}
             {% block content %}{% endblock %}
-        </div>
-        <div class="col-md-4">
-            <div class="content-section">
-                <h3>Our Sidebar</h3>
-                <p class='text-muted'>Join our new options
-                <ul class="list-group">
-<!--                    <a class="nav-item nav-link" href="{% url 'index' %}">Films</a>-->
-
-                    <a class="list-group-item list-group-item-light" href="{% url 'index' %}">Watch films</a>
-                    <li class="list-group-item list-group-item-light">Later</li>
-                    <li class="list-group-item list-group-item-light">Later</li>
-                    <li class="list-group-item list-group-item-light">Later</li>
-                </ul>
-                </p>
-            </div>
         </div>
     </div>
 </main>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.1/themes/smoothness/jquery-ui.min.css">
+<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
