@@ -63,10 +63,12 @@ def search(request):
 
 
 def film_detail(request, pk):
-    comment_form = NewCommentForm(request.POST)
     film_to_show = Film.objects.get(pk=pk)
 
     if request.method == 'POST':
+
+        comment_form = NewCommentForm(request.POST)
+
         if comment_form.is_valid():
             user_comment = comment_form.save(commit=False)
             user_comment.film = Film.objects.get(pk=pk)
@@ -78,6 +80,8 @@ def film_detail(request, pk):
                 'comment_form': comment_form,
             }
             return render(request, 'film/film_detail.html', context=contex)
+
+    comment_form = NewCommentForm(request.POST)
 
     contex = {
         'object': film_to_show,
