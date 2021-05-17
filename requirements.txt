@@ -51,14 +51,6 @@ six==1.15.0
 soupsieve==2.2.1
 urllib3==1.26.4
 whitenoise==5.2.0
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> b5fd3495ad986eb3dbec83e9ae0ee3baca59349b
->>>>>>> Stashed changes
 autopep8==1.5.3
 django-js-asset==1.2.2
 Pillow==7.2.0
@@ -66,11 +58,4 @@ pycodestyle==2.6.0
 pytz==2020.1
 sqlparse==0.3.1
 toml==0.10.1
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
 psycopg2
->>>>>>> Stashed changes
-=======
->>>>>>> b5fd3495ad986eb3dbec83e9ae0ee3baca59349b
->>>>>>> Stashed changes
