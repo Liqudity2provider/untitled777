@@ -1,5 +1,6 @@
 import json
 
+from django.contrib import messages
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -66,30 +67,35 @@ def film_detail(request, pk):
     film_to_show = Film.objects.get(pk=pk)
 
     if request.method == 'POST':
-
         comment_form = NewCommentForm(request.POST)
 
-    comment_form = NewCommentForm(request.POST)
-    film_to_show = Film.objects.get(pk=pk)
-
-    if request.method == 'POST':
         if comment_form.is_valid():
-            user_comment = comment_form.save(commit=False)
-            user_comment.film = Film.objects.get(pk=pk)
-            user_comment.author = request.user
-            user_comment.save()
+
             contex = {
                 'object': film_to_show,
                 'comments': film_to_show.comments.all(),
                 'comment_form': comment_form,
             }
-            return render(request, 'film/film_detail.html', context=contex)
+            user_comment = comment_form.save(commit=False)
+            user_comment.film = Film.objects.get(pk=pk)
+            try:
+                request.user
+                user_comment.author = request.user
+                user_comment.save()
 
-    comment_form = NewCommentForm(request.POST)
+                return render(request, 'film/film_detail.html', context=contex)
+
+            except:
+                messages.warning(request, 'Please login before sending comments.') # recorded
+
+                return render(request, 'film/film_detail.html', context=contex)
+
+    comment_form = NewCommentForm(request.GET)
 
     contex = {
         'object': film_to_show,
         'comments': film_to_show.comments.all(),
         'comment_form': comment_form,
     }
+
     return render(request, 'film/film_detail.html', context=contex)
