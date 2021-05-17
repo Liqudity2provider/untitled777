@@ -63,12 +63,19 @@ def search(request):
 
 
 def film_detail(request, pk):
+<<<<<<< Updated upstream
     film_to_show = Film.objects.get(pk=pk)
 
     if request.method == 'POST':
 
         comment_form = NewCommentForm(request.POST)
 
+=======
+    comment_form = NewCommentForm(request.POST)
+    film_to_show = Film.objects.get(pk=pk)
+
+    if request.method == 'POST':
+>>>>>>> Stashed changes
         if comment_form.is_valid():
             user_comment = comment_form.save(commit=False)
             user_comment.film = Film.objects.get(pk=pk)
@@ -81,8 +88,11 @@ def film_detail(request, pk):
             }
             return render(request, 'film/film_detail.html', context=contex)
 
+<<<<<<< Updated upstream
     comment_form = NewCommentForm(request.POST)
 
+=======
+>>>>>>> Stashed changes
     contex = {
         'object': film_to_show,
         'comments': film_to_show.comments.all(),
