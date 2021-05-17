@@ -1,10 +1,11 @@
 import json
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 
 from films import utils_parse
+from films.forms import NewCommentForm
 from films.models import Film, Genre
 
 
@@ -59,3 +60,28 @@ def search(request):
         data = films.values()
         return JsonResponse(list(data), safe=False)
     return render(request, 'film/search.html')
+
+
+def film_detail(request, pk):
+    comment_form = NewCommentForm(request.POST)
+    film_to_show = Film.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        if comment_form.is_valid():
+            user_comment = comment_form.save(commit=False)
+            user_comment.film = Film.objects.get(pk=pk)
+            user_comment.author = request.user
+            user_comment.save()
+            contex = {
+                'object': film_to_show,
+                'comments': film_to_show.comments.all(),
+                'comment_form': comment_form,
+            }
+            return render(request, 'film/film_detail.html', context=contex)
+
+    contex = {
+        'object': film_to_show,
+        'comments': film_to_show.comments.all(),
+        'comment_form': comment_form,
+    }
+    return render(request, 'film/film_detail.html', context=contex)

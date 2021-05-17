@@ -7,7 +7,7 @@
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="{{ i.image }}" alt="Card image cap">
                         <div class="card-body">
-                            <h5 class="card-title">{{ i.name }}</h5>
+                            <a href="{% url 'film-detail' i.id %}"><h5 class="card-title">{{ i.name }}</h5></a>
 
                             <p class="card-text">Жанр - {{ i.genres.all|join:", " }}</p>
 

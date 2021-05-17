@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Genre(models.Model):
@@ -20,3 +22,22 @@ class Film(models.Model):
 
     class Meta:
         ordering = ('-rating',)
+
+
+class Comment(MPTTModel):
+    film = models.ForeignKey(Film,
+                             on_delete=models.CASCADE,
+                             related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE,
+                            null=True, blank=True, related_name='children')
+    email = models.EmailField()
+    content = models.TextField()
+    publish = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['publish']
+
+    def __str__(self):
+        return self.content
