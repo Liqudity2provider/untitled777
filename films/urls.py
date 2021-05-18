@@ -1,13 +1,13 @@
 from django.urls import path
 from . import views
 from django.views.decorators.csrf import csrf_exempt
-
+from .views import FilmSearchView, FilmDetailView, FilmsMainPage, UpdateFilmList
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('films/<str:params>/', views.index, name='index'),
-    path('films/', views.index, name='index'),
-    path('film/<int:pk>/', views.film_detail, name='film-detail'),
-    path('update_db/', views.update, name='update-db'),
-    path('search/', csrf_exempt(views.search), name="search"),
+    path('', FilmsMainPage.as_view(), name='index'),
+    path('films/<str:params>/', FilmsMainPage.as_view(), name='index'),
+    path('films/', FilmsMainPage.as_view(), name='index'),
+    path('film/<int:pk>/', FilmDetailView.as_view(), name='film-detail'),
+    path('update_db/', UpdateFilmList.as_view(), name='update-db'),
+    path('search/', csrf_exempt(FilmSearchView.as_view()), name="search"),
 ]
