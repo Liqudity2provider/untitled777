@@ -1,87 +1,71 @@
 import json
-
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import render
-from django.template.loader import render_to_string
-
-from films import utils_parse
-from films.forms import NewCommentForm
+from django.views.generic import ListView, DetailView, CreateView
 from films.models import Film, Genre
+from films.services import ServiceUpdateFilmList, ServiceFilmDetailView, AddNewComment
 
 
-def index(request, params=''):
-    if len(params) > 2:
-        contex = {
-            'data_films': Film.objects.filter(genres__name=params),
-            'genres': Genre.objects.all(),
-        }
-    else:
-        contex = {
-            'data_films': Film.objects.all(),
-            'genres': Genre.objects.all(),
-        }
-    return render(request, 'film/index.html', contex)
+class FilmsMainPage(ListView):
+    model = Film
+    contex = {
+        'data_films': Film.objects.all(),
+        'genres': Genre.objects.all(),
+    }
+
+    def get(self, request, params='', **kwargs):
+        """:return films filtered byy Genre name"""
+
+        if params:
+            self.contex['data_films'] = Film.objects.filter(genres__name=params)
+        return render(request, 'film/index.html', self.contex)
 
 
-def update(request):
-    to_delete = Genre.objects.all()
-    to_delete.delete()
-    to_delete = Film.objects.all()
-    to_delete.delete()
+class UpdateFilmList(CreateView):
 
-    list_genres = utils_parse.return_genres()
-    for genre in list_genres:
-        new_genre = Genre(name=genre)
-        new_genre.save()
+    """delete films, genres and comments. Parse and adds from site"""
 
-    list_with_films = utils_parse.parse_func()
+    def get(self, request, **kwargs):
+        status_ubdatedb = ServiceUpdateFilmList.execute({})
 
-    for film in list_with_films:
-        try:
-            new_film = Film(name=film['name'], link=film['link'], image=film['image'],
-                            rating=film['rating'], )
-            new_film.save()
-
-            for genre in film['genres']:
-                genre = Genre.objects.filter(name__contains=genre).first()
-                new_film.genres.add(genre)
-                new_film.save()
-        except:
-            print('Error adding film to db')
-
-    return render(request, 'film/done.html', {})
+        if status_ubdatedb:
+            return render(request, 'film/done.html', {})
+        return HttpResponseNotFound('Error in updating database')
 
 
-def search(request):
-    if request.method == "POST":
+class FilmSearchView(ListView):
+    model = Film
+
+    def get(self, request, **kwargs):
+        return render(request, 'film/search.html')
+
+    def post(self, request):
         search_string = json.loads(request.body).get('searchText')
-
         films = Film.objects.filter(name__icontains=search_string)
         data = films.values()
         return JsonResponse(list(data), safe=False)
-    return render(request, 'film/search.html')
 
 
-def film_detail(request, pk):
-    comment_form = NewCommentForm(request.POST)
-    film_to_show = Film.objects.get(pk=pk)
+class FilmDetailView(DetailView):
 
-    if request.method == 'POST':
-        if comment_form.is_valid():
-            user_comment = comment_form.save(commit=False)
-            user_comment.film = Film.objects.get(pk=pk)
-            user_comment.author = request.user
-            user_comment.save()
-            contex = {
-                'object': film_to_show,
-                'comments': film_to_show.comments.all(),
-                'comment_form': comment_form,
-            }
-            return render(request, 'film/film_detail.html', context=contex)
+    def get(self, request, **kwargs):
 
-    contex = {
-        'object': film_to_show,
-        'comments': film_to_show.comments.all(),
-        'comment_form': comment_form,
-    }
-    return render(request, 'film/film_detail.html', context=contex)
+        """:return Film object, film's comments and comments form"""
+
+        context = ServiceFilmDetailView.execute({
+            'pk': kwargs['pk'],
+        })
+        return render(request, 'film/film_detail.html', context=context)
+
+    def post(self, request, pk):
+
+        """adds new comment to Film"""
+
+        result_service = AddNewComment.execute({
+            'pk': pk,
+            'request': request,
+        })
+        if result_service['status']:
+            return render(request, 'film/film_detail.html', context=result_service['context'])
+        return HttpResponseNotFound('Error in creating comment')
