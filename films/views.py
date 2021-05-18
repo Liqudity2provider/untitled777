@@ -1,5 +1,4 @@
 import json
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.http import JsonResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
