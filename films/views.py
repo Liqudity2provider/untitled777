@@ -8,21 +8,19 @@ from films.services import ServiceUpdateFilmList, ServiceFilmDetailView, AddNewC
 
 class FilmsMainPage(ListView):
     model = Film
-    contex = {
-        'data_films': Film.objects.all(),
-        'genres': Genre.objects.all(),
-    }
 
-    def get(self, request, params='', **kwargs):
+    def get(self, request, **kwargs):
         """:return films filtered byy Genre name"""
-
-        if params:
-            self.contex['data_films'] = Film.objects.filter(genres__name=params)
-        return render(request, 'film/index.html', self.contex)
+        contex = {
+            'data_films': Film.objects.all(),
+            'genres': Genre.objects.all(),
+        }
+        if kwargs.get('params'):
+            contex['data_films'] = Film.objects.filter(genres__name=kwargs.get('params'))
+        return render(request, 'film/index.html', contex)
 
 
 class UpdateFilmList(CreateView):
-
     """delete films, genres and comments. Parse and adds from site"""
 
     def get(self, request, **kwargs):
@@ -49,7 +47,6 @@ class FilmSearchView(ListView):
 class FilmDetailView(DetailView):
 
     def get(self, request, **kwargs):
-
         """:return Film object, film's comments and comments form"""
 
         context = ServiceFilmDetailView.execute({
@@ -58,7 +55,6 @@ class FilmDetailView(DetailView):
         return render(request, 'film/film_detail.html', context=context)
 
     def post(self, request, pk):
-
         """adds new comment to Film"""
 
         result_service = AddNewComment.execute({

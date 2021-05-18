@@ -135,6 +135,8 @@
                             Выбрать жанр
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item"
+                                       href="{% url 'index' %}">Все фильмы</a>
                             {% if genres %}
                                 {% for genre in genres %}
                                     <a class="dropdown-item"
