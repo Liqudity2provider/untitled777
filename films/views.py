@@ -8,13 +8,11 @@ from films.services import ServiceUpdateFilmList, ServiceFilmDetailView, AddNewC
 
 class FilmsMainPage(ListView):
     model = Film
-    contex = {
-        'data_films': Film.objects.all(),
-        'genres': Genre.objects.all(),
-    }
 
     def get(self, request, **kwargs):
+      
         """:return films filtered by Genre name"""
+        
         contex = {
             'data_films': Film.objects.all(),
             'genres': Genre.objects.all(),
