@@ -138,6 +138,8 @@
                         <a class="dropdown-item"
                                        href="{% url 'index' %}">Все фильмы</a>
                             {% if genres %}
+                                <a class="dropdown-item"
+                                       href="{% url 'index' %}">Все фильмы</a>
                                 {% for genre in genres %}
                                     <a class="dropdown-item"
                                        href="{% url 'index' params=genre.name %}">{{ genre.name }}</a>

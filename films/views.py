@@ -10,7 +10,9 @@ class FilmsMainPage(ListView):
     model = Film
 
     def get(self, request, **kwargs):
-        """:return films filtered byy Genre name"""
+      
+        """:return films filtered by Genre name"""
+        
         contex = {
             'data_films': Film.objects.all(),
             'genres': Genre.objects.all(),
