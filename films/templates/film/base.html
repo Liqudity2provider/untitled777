@@ -136,6 +136,8 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             {% if genres %}
+                                <a class="dropdown-item"
+                                       href="{% url 'index' %}">Все фильмы</a>
                                 {% for genre in genres %}
                                     <a class="dropdown-item"
                                        href="{% url 'index' params=genre.name %}">{{ genre.name }}</a>
