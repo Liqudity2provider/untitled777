@@ -14,11 +14,104 @@
                 <button class="btn btn-outline-info">Login</button>
             </div>
         </form>
-
+        <div ng-app="SessionApp">
+            <div ng-controller="LoginCtrl as ctrl">
+                <div>
+                    <div>
+                        <button class="btn btn-outline-info" ng-click="authenticate('google')">Login google
+                        </button>
+                    </div>
+                    <div>
+                        <button class="btn btn-outline-info" ng-click="authenticate('twitter')">Login twitter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="border-top pt-3">
             <small class="text-muted">
                 Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
             </small>
         </div>
     </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    {{ block.super }}
+    <script type="text/javascript">
+
+        function set_user(response) {
+            var x;
+            var source;
+            if (response) {
+                source = response.data;
+                x = Boolean(true)
+            } else {
+                x = Boolean(false)
+                source = {
+                    'username': null,
+                    'first_name': null,
+                    'last_name': null,
+                    'email': null,
+                };
+            }
+            self.user.username = source.username;
+            self.user.first_name = source.first_name;
+            self.user.last_name = source.last_name;
+            self.user.email = source.email;
+            const redir = '{{ settings.PTH_TO_REDIRECT }}'
+            if (x){
+                window.location.href = redir;
+            }
+
+        };
+
+        angular.module('SessionApp', ['satellizer'])
+            .config(function ($authProvider) {
+                $authProvider.facebook({
+                    url: "{% url 'login_social_session' provider='facebook' %}",
+                    clientId: '{{ facebook_key }}'
+                });
+                $authProvider.google({
+                    url: "{% url 'login_social_session' provider='google-oauth2' %}",
+                    clientId: '{{ googleoauth2_key }}',
+                    redirectUri: window.location.origin + '/',
+
+
+                });
+                $authProvider.twitter({
+                    url: "{% url 'login_social_session' provider='twitter' %}",
+                });
+            }).config(function ($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+        }).controller('LoginCtrl', function ($scope, $auth, $http) {
+            self = this;
+
+            self.user = {};
+            set_user();
+
+            var req = {
+                method: "GET",
+                url: '{% url "current_user_session" %}',
+                skipAuthorization: true  // in case of session auth don't send token header
+
+            }
+
+            $http(req).then(function (response) {
+                console.log("Got user from session cookies");
+                set_user(response);
+
+            });
+
+
+            $scope.authenticate = function (provider) {
+                $auth.authenticate(provider).then(set_user);
+                console.log('You have been logged in')
+            };
+
+        });
+    </script>
 {% endblock %}

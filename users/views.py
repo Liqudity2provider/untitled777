@@ -2,7 +2,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from rest_framework import generics
-
+from django.views.generic import TemplateView
+from django.contrib.auth import logout, get_user_model
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_social_auth.serializers import UserSerializer
+from rest_social_auth.views import KnoxAuthMixin, SimpleJWTAuthMixin
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -58,3 +68,13 @@ class UserProfile(DetailView, UpdateView):
         }
 
         return render(request, 'users/profile.html', context)
+
+
+class UserSessionDetailView(generics.RetrieveAPIView):
+    authentication_classes = (SessionAuthentication, )
+    permission_classes = IsAuthenticated,
+    serializer_class = UserSerializer
+    model = get_user_model()
+
+    def get_object(self, queryset=None):
+        return self.request.user

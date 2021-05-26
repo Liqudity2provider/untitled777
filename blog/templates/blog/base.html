@@ -104,9 +104,9 @@
 
     </style>
     {% if title %}
-    <title>Django Blog - {{ title }}</title>
+        <title>Django Blog - {{ title }}</title>
     {% else %}
-    <title>Django Blog</title>
+        <title>Django Blog</title>
     {% endif %}
 </head>
 <body>
@@ -128,12 +128,12 @@
                     <a class="nav-item nav-link" href="{% url 'chat_entry' %}">Chat</a>
 
                     {% if not user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                    <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
                     {% else %}
-                    <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">My Account</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
+                        <a class="nav-item nav-link" href="{% url 'profile' %}">My Account</a>
+                        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                     {% endif %}
                 </div>
             </div>
@@ -144,9 +144,9 @@
     <div class="row">
         <div class="col-md-8">
             {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
             {% endif %}
             {% block content %}{% endblock %}
         </div>
@@ -155,7 +155,7 @@
                 <h3>Our Sidebar</h3>
                 <p class='text-muted'>Join our new options
                 <ul class="list-group">
-<!--                    <a class="nav-item nav-link" href="{% url 'index' %}">Films</a>-->
+                    <!--                    <a class="nav-item nav-link" href="{% url 'index' %}">Films</a>-->
 
                     <a class="list-group-item list-group-item-light" href="{% url 'index' %}">Watch films</a>
                     <li class="list-group-item list-group-item-light">Later</li>
@@ -179,5 +179,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+{% block scripts %}
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+    <script src="https://cdn.jsdelivr.net/satellizer/0.15.5/satellizer.min.js"></script>
+{% endblock scripts %}
 </body>
 </html>
