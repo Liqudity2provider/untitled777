@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from users import views as user_views
@@ -31,5 +32,9 @@ urlpatterns = [
     path('films/', include('films.urls')),
     path("api/", include("users.urls")),
     path('api-auth/', include('rest_framework.urls')),
+
+    # rest django auth
+    url(r'^api/login/', include('rest_social_auth.urls_session')),
+    url(r'^api/user/session/', user_views.UserSessionDetailView.as_view(), name="current_user_session"),
 
 ]
