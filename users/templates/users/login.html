@@ -52,13 +52,10 @@
     <script type="text/javascript">
 
         function set_user(response) {
-            var x;
             var source;
             if (response) {
                 source = response.data;
-                x = Boolean(true)
             } else {
-                x = Boolean(false)
                 source = {
                     'username': null,
                     'first_name': null,
@@ -71,10 +68,9 @@
             self.user.last_name = source.last_name;
             self.user.email = source.email;
             const redir = '{{ settings.PTH_TO_REDIRECT }}'
-            if (x) {
+            if (response) {
                 window.location.href = redir;
             }
-
         };
 
         angular.module('SessionApp', ['satellizer'])
@@ -87,8 +83,6 @@
                     url: "{% url 'login_social_session' provider='google-oauth2' %}",
                     clientId: '{{ googleoauth2_key }}',
                     redirectUri: window.location.origin + '/',
-
-
                 });
                 $authProvider.twitter({
                     url: "{% url 'login_social_session' provider='twitter' %}",

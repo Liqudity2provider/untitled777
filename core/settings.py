@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'mptt',
 
     # rest-social-auth
-    'social_django',  # django social auth
+    'social_django',
     'rest_social_auth'
 ]
 
