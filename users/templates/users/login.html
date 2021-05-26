@@ -17,14 +17,23 @@
         <div ng-app="SessionApp">
             <div ng-controller="LoginCtrl as ctrl">
                 <div>
-                    <div>
-                        <button class="btn btn-outline-info" ng-click="authenticate('google')">Login google
-                        </button>
+                    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans"/>
+
+                    <div class="google-btn">
+                        <div class="google-icon-wrapper">
+                            <img class="google-icon"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+                        </div>
+                        <p class="btn-text" ng-click="authenticate('google')"><b>Sign in with google</b></p>
                     </div>
                     <div>
-                        <button class="btn btn-outline-info" ng-click="authenticate('twitter')">Login twitter
-                        </button>
+{#                        <button class="btn btn-outline-info" ng-click="authenticate('google')">Login google#}
+{#                        </button>#}
                     </div>
+                    {#                    <div>#}
+                    {#                        <button class="btn btn-outline-info" ng-click="authenticate('twitter')">Login twitter#}
+                    {#                        </button>#}
+                    {#                    </div>#}
                 </div>
             </div>
         </div>
@@ -62,7 +71,7 @@
             self.user.last_name = source.last_name;
             self.user.email = source.email;
             const redir = '{{ settings.PTH_TO_REDIRECT }}'
-            if (x){
+            if (x) {
                 window.location.href = redir;
             }
 
