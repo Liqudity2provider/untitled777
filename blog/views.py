@@ -10,14 +10,6 @@ from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
 
-def home(request):
-    Post.objects.all()
-    context = {
-        'posts': Post.objects.all(),
-    }
-    return render(request, 'blog/home.html', context)
-
-
 class PostListView(ListView):
     model = Post
 
@@ -65,8 +57,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
-def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+class AboutView(DetailView):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'blog/about.html', {'title': 'About'})
 
 
 class PostApiListView(generics.ListCreateAPIView):

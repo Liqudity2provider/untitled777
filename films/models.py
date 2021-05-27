@@ -11,7 +11,7 @@ class Genre(models.Model):
 
 
 class Film(models.Model):
-    name = models.CharField(max_length=100, help_text="Film naming", unique=True)
+    name = models.CharField(max_length=100, help_text="Film naming")
     image = models.CharField(max_length=500, )
     link = models.CharField(max_length=500, )
     rating = models.FloatField()

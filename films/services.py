@@ -7,7 +7,7 @@ from films.forms import NewCommentForm
 from films.models import Genre, Film
 
 
-class ServiceUpdateFilmList(Service, ABC):
+class ServiceUpdateFilmList(Service):
 
     def process(self):
         Genre.objects.all().delete()
@@ -37,7 +37,7 @@ class ServiceUpdateFilmList(Service, ABC):
         return True
 
 
-class ServiceFilmDetailView(Service, ABC):
+class ServiceFilmDetailView(Service):
 
     def process(self):
         film_to_show = Film.objects.get(pk=self.data['pk'])
@@ -51,7 +51,7 @@ class ServiceFilmDetailView(Service, ABC):
         return context
 
 
-class AddNewComment(Service, ABC):
+class AddNewComment(Service):
 
     def process(self):
         pk = self.data['pk']

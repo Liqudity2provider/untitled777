@@ -30,7 +30,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('', include('blog.urls')),
     path('films/', include('films.urls')),
-    path("api/", include("users.urls")),
+    path("api/users/", include("users.urls"), name="api-users"),
     path('api-auth/', include('rest_framework.urls')),
 
     # rest django auth
