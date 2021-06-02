@@ -13,6 +13,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from core import settings
 from users.utils import user_from_token
 from .forms import PostForm
 from .models import Post
@@ -21,7 +22,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
-path = Site.objects.get_current().domain
+path = Site.objects.get_current(id=settings.SITE_ID)
 headers = {'Content-Type': 'application/json'}
 
 

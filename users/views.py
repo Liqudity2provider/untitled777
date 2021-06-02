@@ -21,6 +21,7 @@ from django.contrib.auth import authenticate, login
 
 from blog.models import Post
 from blog.serializers import PostSerializer
+from core import settings
 from core.constants import jwt_service_object
 from django.views.generic import TemplateView
 from django.contrib.auth import logout, get_user_model
@@ -41,7 +42,7 @@ from .models import Profile
 from .serializers import UserSerializer
 from .utils import user_from_token, get_tokens_for_user
 
-path = Site.objects.get_current()
+path = Site.objects.get_current(id=settings.SITE_ID)
 headers = {
     'Content-Type': 'application/json',
 }
