@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 from users import views as user_views
 from django.contrib.auth import views as auth_views
+from rest_framework_simplejwt import views as jwt_views
 
 from users.views import UserRegister, UserProfile
 
@@ -26,15 +29,15 @@ urlpatterns = [
     path('chat/', include('chat.urls')),
     path('register/', UserRegister.as_view(), name='register'),
     path('profile/', UserProfile.as_view(), name='profile'),
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('login/', user_views.LoginView.as_view(), name='login'),
+    path('logout/', user_views.LogoutView.as_view(), name='logout'),
     path('', include('blog.urls')),
     path('films/', include('films.urls')),
     path("api/users/", include("users.urls"), name="api-users"),
-    path('api-auth/', include('rest_framework.urls')),
 
-    # rest django auth
-    url(r'^api/login/', include('rest_social_auth.urls_session')),
-    url(r'^api/user/session/', user_views.UserSessionDetailView.as_view(), name="current_user_session"),
+    # rest django jwt auth
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    url(r'^api/login/', include('rest_social_auth.urls_jwt_pair')),
 
 ]

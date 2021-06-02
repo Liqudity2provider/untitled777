@@ -14,11 +14,10 @@
                 <button class="btn btn-outline-info">Login</button>
             </div>
         </form>
-        <div ng-app="SessionApp">
-            <div ng-controller="LoginCtrl as ctrl">
-                <div>
-                    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans"/>
 
+        <div ng-app="JWTApp">
+            <div ng-controller="LoginJWTCtrl as ctrl">
+                <div>
                     <div class="google-btn">
                         <div class="google-icon-wrapper">
                             <img class="google-icon"
@@ -26,14 +25,6 @@
                         </div>
                         <p class="btn-text" ng-click="authenticate('google')"><b>Sign in with google</b></p>
                     </div>
-                    <div>
-{#                        <button class="btn btn-outline-info" ng-click="authenticate('google')">Login google#}
-{#                        </button>#}
-                    </div>
-                    {#                    <div>#}
-                    {#                        <button class="btn btn-outline-info" ng-click="authenticate('twitter')">Login twitter#}
-                    {#                        </button>#}
-                    {#                    </div>#}
                 </div>
             </div>
         </div>
@@ -51,7 +42,64 @@
     {{ block.super }}
     <script type="text/javascript">
 
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+
+        function setCookie(name, value, options = {}) {
+
+            options = {
+                path: '/',
+            };
+
+            if (options.expires instanceof Date) {
+                options.expires = options.expires.toUTCString();
+            }
+
+            let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+            for (let optionKey in options) {
+                updatedCookie += "; " + optionKey;
+                let optionValue = options[optionKey];
+                if (optionValue !== true) {
+                    updatedCookie += "=" + optionValue;
+                }
+            }
+
+            document.cookie = updatedCookie;
+        }
+
+        function deleteCookie(name) {
+            setCookie(name, "", {
+                'max-age': -1
+            })
+        }
+
         function set_user(response) {
+            try {
+                console.log(response.data)
+                let token = response.data['token']
+                let refresh = response.data['refresh']
+                try {
+                    deleteCookie('token');
+                    deleteCookie('refresh');
+                } catch (e) {
+                    console.log(e)
+                }
+
+                setCookie('token', token, {secure: true, 'max-age': 86400});
+                setCookie('refresh', refresh, {secure: true, 'max-age': 86400});
+
+                console.log(document.cookie)
+
+                window.location.href = '../';
+            } catch (err) {
+                console.log('cannot read response')
+            }
+
             var source;
             if (response) {
                 source = response.data;
@@ -67,54 +115,60 @@
             self.user.first_name = source.first_name;
             self.user.last_name = source.last_name;
             self.user.email = source.email;
-            const redir = '{{ settings.PTH_TO_REDIRECT }}'
-            if (response) {
-                window.location.href = redir;
-            }
-        };
 
-        angular.module('SessionApp', ['satellizer'])
+        }
+
+        angular.module('JWTApp', ['satellizer'])
             .config(function ($authProvider) {
-                $authProvider.facebook({
-                    url: "{% url 'login_social_session' provider='facebook' %}",
-                    clientId: '{{ facebook_key }}'
-                });
-                $authProvider.google({
-                    url: "{% url 'login_social_session' provider='google-oauth2' %}",
-                    clientId: '{{ googleoauth2_key }}',
-                    redirectUri: window.location.origin + '/',
-                });
-                $authProvider.twitter({
-                    url: "{% url 'login_social_session' provider='twitter' %}",
-                });
-            }).config(function ($httpProvider) {
-            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-        }).controller('LoginCtrl', function ($scope, $auth, $http) {
-            self = this;
 
+                $authProvider.google({
+                    url: "{% url 'login_social_jwt_pair_user' provider='google-oauth2' %}",
+                    clientId: '{{ googleoauth2_key }}',
+                    redirectUri: window.location.origin + '/'
+                });
+
+                $authProvider.authToken = 'JWT';
+                $authProvider.tokenPrefix = 'satellizer_simple_jwt';  // to not collide with regular token auth
+            }).controller('LoginJWTCtrl', function ($scope, $auth, $http) {
+            self = this;
             self.user = {};
             set_user();
 
-            var req = {
-                method: "GET",
-                url: '{% url "current_user_session" %}',
-                skipAuthorization: true  // in case of session auth don't send token header
-
-            }
-
-            $http(req).then(function (response) {
-                console.log("Got user from session cookies");
-                set_user(response);
-
-            });
-
+            self.jwtPayload = $auth.getPayload();
 
             $scope.authenticate = function (provider) {
-                $auth.authenticate(provider).then(set_user);
-                console.log('You have been logged in')
+                $auth.authenticate(provider).then(function (response) {
+                    console.log(response.data.token)
+                    $auth.setToken(response.data.token);
+                    set_user(response);
+                    self.jwtPayload = $auth.getPayload();
+                }).catch(function (data) {
+                    var err_msg = "Something went wrong";
+                    console.log(data)
+                    console.log(err_msg);
+                    alert(err_msg);
+                });
             };
 
+            $scope.logout = function () {
+                $auth.removeToken();
+                set_user();
+                self.jwtPayload = $auth.getPayload();
+            };
         });
+
+        window.onload = function () {
+            let token = getCookie('token')
+
+            try {
+                if (token) {
+                    window.location.href = '../';
+                }
+            } catch (e) {
+
+                console.log(e)
+            }
+        }
+
     </script>
 {% endblock %}
