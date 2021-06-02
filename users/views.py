@@ -42,7 +42,7 @@ from .models import Profile
 from .serializers import UserSerializer
 from .utils import user_from_token, get_tokens_for_user
 
-path = Site.objects.get_current(id=settings.SITE_ID)
+path = str(Site.objects.get(id=settings.SITE_ID))
 headers = {
     'Content-Type': 'application/json',
 }

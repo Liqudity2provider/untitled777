@@ -22,7 +22,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
-path = Site.objects.get_current(id=settings.SITE_ID)
+path = str(Site.objects.get(id=settings.SITE_ID))
 headers = {'Content-Type': 'application/json'}
 
 
