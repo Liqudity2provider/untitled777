@@ -22,7 +22,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
-path = str(Site.objects.get(id=settings.SITE_ID))
+path = 'http://django-chat-test5050.herokuapp.com/'
 headers = {'Content-Type': 'application/json'}
 
 

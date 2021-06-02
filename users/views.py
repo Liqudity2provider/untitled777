@@ -42,7 +42,7 @@ from .models import Profile
 from .serializers import UserSerializer
 from .utils import user_from_token, get_tokens_for_user
 
-path = str(Site.objects.get(id=settings.SITE_ID))
+path = 'http://django-chat-test5050.herokuapp.com/'
 headers = {
     'Content-Type': 'application/json',
 }
