@@ -4,6 +4,7 @@ import requests
 import rest_framework_simplejwt
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework_simplejwt.backends import TokenBackend
@@ -40,7 +41,7 @@ from .models import Profile
 from .serializers import UserSerializer
 from .utils import user_from_token, get_tokens_for_user
 
-path = 'http://127.0.0.1:8000/'
+path = Site.objects.get_current()
 headers = {
     'Content-Type': 'application/json',
 }
