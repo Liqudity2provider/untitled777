@@ -2,6 +2,7 @@ import json
 
 import requests
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.sites.models import Site
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -20,7 +21,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
-path = 'http://127.0.0.1:8000/'
+path = Site.objects.get_current().domain
 headers = {'Content-Type': 'application/json'}
 
 

@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 INSTALLED_APPS = [
     'chat',
     'channels',
+    'django.contrib.sites',
 
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
@@ -66,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+SITE_ID = 2
 
 ROOT_URLCONF = 'core.urls'
 

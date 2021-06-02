@@ -21,7 +21,6 @@ class UserApiListView(generics.ListCreateAPIView):
     model = User
 
     def create(self, request, *args, **kwargs):
-        print(request.data)
         data_to_create = {
             "username": request.data.get("username"),
             "email": request.data.get("email"),

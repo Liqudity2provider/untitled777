@@ -74,12 +74,12 @@ class UserRegister(generics.CreateAPIView):
         output = response.json()
         if output.get("errors"):
             return Response(template_name='users/register.html', data={
-                "form": UserRegisterForm,
+                "form": UserRegisterForm(),
                 "messages": [*output.get('errors')]
             })
 
         return Response(template_name='users/login.html', data={
-            "form": UserRegisterForm,
+            "form": UserRegisterForm(),
             "messages": output.get('errors')
         })
 
