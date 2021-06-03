@@ -177,13 +177,12 @@
                 <!-- Navbar Right Side -->
                 <div id="not auth" class="navbar-nav">
                     <a class="nav-item nav-link" href="{% url 'chat_entry' %}">Chat</a>
-
                     <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
 
                 </div>
                 <div id="auth" class="navbar-nav">
-
+                    <a class="nav-item nav-link" href="{% url 'chat_entry' %}">Chat</a>
                     <a class="nav-item nav-link" href="{% url 'post-create' %}">Create Post</a>
                     <a class="nav-item nav-link" href="{% url 'profile' %}">My Account</a>
                     <a class="nav-item nav-link" onclick="myScript" href="{% url 'logout' %}">Logout</a>
