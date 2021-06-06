@@ -157,18 +157,18 @@
             };
         });
 
-        window.onload = function () {
-            let token = getCookie('token')
-
-            try {
-                if (token) {
-                    window.location.href = '../';
-                }
-            } catch (e) {
-
-                console.log(e)
-            }
-        }
+        {#window.onload = function () {#}
+        {#    let token = getCookie('token')#}
+        {##}
+            {#try {#}
+            {#    if (token) {#}
+            {#        window.location.href = "{% url 'blog-home' %}";#}
+            {#    }#}
+            {# } catch (e) {#}
+            {##}
+            {#    console.log(e)#}
+            {# }#}
+        {# }#}
 
     </script>
 {% endblock %}

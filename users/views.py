@@ -4,6 +4,7 @@ import requests
 import rest_framework_simplejwt
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework_simplejwt.backends import TokenBackend
@@ -42,6 +43,7 @@ from .serializers import UserSerializer
 from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
+
 headers = {
     'Content-Type': 'application/json',
 }
@@ -75,12 +77,12 @@ class UserRegister(generics.CreateAPIView):
         output = response.json()
         if output.get("errors"):
             return Response(template_name='users/register.html', data={
-                "form": UserRegisterForm,
+                "form": UserRegisterForm(),
                 "messages": [*output.get('errors')]
             })
 
         return Response(template_name='users/login.html', data={
-            "form": UserRegisterForm,
+            "form": UserRegisterForm(),
             "messages": output.get('errors')
         })
 

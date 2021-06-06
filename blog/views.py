@@ -3,6 +3,7 @@ import json
 import requests
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.sites.models import Site
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -12,7 +13,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from users.forms import UserLoginForm
 from users.utils import check_expiration, refresh_token_or_redirect
 from core import settings

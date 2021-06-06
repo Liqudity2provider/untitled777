@@ -35,6 +35,7 @@ ACTIVE_URL = 0
 INSTALLED_APPS = [
     'chat',
     'channels',
+    'django.contrib.sites',
 
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+SITE_ID = 2
 
 ROOT_URLCONF = 'core.urls'
 
