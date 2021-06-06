@@ -23,15 +23,6 @@ class PostApiListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    def get(self, request, *args, **kwargs):
-        data = list(Post.objects.values())
-        user_queryset = User.objects.all()
-        [post.update({
-            "author_image": user_queryset.get(pk=post.get('author_id')).profile.image,
-            "author": user_queryset.get(pk=post.get('author_id')).username,
-        }) for post in data]
-        return JsonResponse(data, safe=False)
-
 
 class PostApiDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -40,10 +31,3 @@ class PostApiDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-
-    def get(self, request, *args, **kwargs):
-        post = Post.objects.get(pk=kwargs.get("pk"))
-        response = self.retrieve(request, *args, **kwargs)
-        user_queryset = User.objects.all()
-        response.data.update({"author_image": user_queryset.get(pk=post.author_id).profile.image})
-        return JsonResponse(response.data, safe=False)

@@ -40,9 +40,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile
 from .serializers import UserSerializer
-from .utils import user_from_token, get_tokens_for_user
+from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect
 
-path = 'http://django-chat-test5050.herokuapp.com/'
+path = settings.MY_URLS[settings.ACTIVE_URL]
+
 headers = {
     'Content-Type': 'application/json',
 }
@@ -101,33 +102,32 @@ class UserProfile(APIView):
             return redirect('profile')
 
     def get(self, request, *args, **kwargs):
-        token = request.COOKIES.get('token')
-        if token:  # if user is authenticated
-            user = user_from_token(token=token)
+        token = refresh_token_or_redirect(request)
 
-            u_form = UserUpdateForm(instance=user)
-            p_form = ProfileUpdateForm(instance=user)
-            context = {
-                "user": {
-                    "image": user.profile.image
-                },
-                'u_form': u_form,
-                'p_form': p_form,
-            }
+        if not isinstance(token, str):
+            return redirect('logout')
 
-            return render(request, 'users/profile.html', context)
-        else:
-            print('User is not authenticated')
-            return render(request, 'users/login.html')
+        user = user_from_token(token=token)
+
+        u_form = UserUpdateForm(instance=user)
+        p_form = ProfileUpdateForm(instance=user)
+        context = {
+            "user": {
+                "image": user.profile.image
+            },
+            'u_form': u_form,
+            'p_form': p_form,
+        }
+
+        return render(request, 'users/profile.html', context)
 
 
 class LoginView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    form_class = UserLoginForm
 
     def get(self, request, *args, **kwargs):
         return Response(template_name='users/login.html', data={
-            "form": self.form_class
+            "form": UserLoginForm
         })
 
     def post(self, request, *args, **kwargs):
@@ -153,7 +153,7 @@ class LoginView(APIView):
         else:
             messages.error(request, "Cannot find user with this email and password")
             return Response(template_name='users/login.html', data={
-                "form": self.form_class
+                "form": UserLoginForm
             })
 
 

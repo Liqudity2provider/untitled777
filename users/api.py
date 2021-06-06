@@ -20,29 +20,6 @@ class UserApiListView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     model = User
 
-    def create(self, request, *args, **kwargs):
-        data_to_create = {
-            "username": request.data.get("username"),
-            "email": request.data.get("email"),
-            "password": request.data.get("password"),
-            "password2": request.data.get("password2")
-        }
-        serializer = self.get_serializer(data=data_to_create)
-        headers = self.headers
-        try:
-            serializer.is_valid(raise_exception=True)
-        except Exception as e:
-            print('api view exception')
-            return Response(data={
-                "errors": e.args
-            }, headers=headers)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
 
 class UserApiDetailView(generics.RetrieveUpdateAPIView):
     """
