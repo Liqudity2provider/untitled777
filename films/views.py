@@ -1,24 +1,32 @@
 import json
 from django.http import JsonResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.views import APIView
+
 from films.models import Film, Genre
 from films.services import ServiceUpdateFilmList, ServiceFilmDetailView, AddNewComment
+from users.utils import refresh_token_or_redirect
 
 
-class FilmsMainPage(ListView):
-    model = Film
+class FilmsMainPage(APIView):
 
     def get(self, request, **kwargs):
       
         """:return films filtered by Genre name"""
-        
+        token = refresh_token_or_redirect(request)
+
+        if not isinstance(token, str):
+            return redirect('logout')
+
         contex = {
             'data_films': Film.objects.all(),
             'genres': Genre.objects.all(),
         }
         if kwargs.get('params'):
             contex['data_films'] = Film.objects.filter(genres__name=kwargs.get('params'))
+
         return render(request, 'film/index.html', contex)
 
 
@@ -50,6 +58,10 @@ class FilmDetailView(DetailView):
 
     def get(self, request, **kwargs):
         """:return Film object, film's comments and comments form"""
+        token = refresh_token_or_redirect(request)
+
+        if not isinstance(token, str):
+            return redirect('logout')
 
         context = ServiceFilmDetailView.execute({
             'pk': kwargs['pk'],

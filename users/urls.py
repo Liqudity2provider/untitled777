@@ -14,8 +14,8 @@ urlpatterns = [
     path("profile/<int:pk>/", ProfileApiDetailView.as_view()),
 
     # path('<int:pk>/', UserDetail.as_view()),
-    path('scookie', setcookie),
-    path('gcookie', getcookie)
+    path('scookie/', setcookie),
+    path('gcookie/', getcookie)
 
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

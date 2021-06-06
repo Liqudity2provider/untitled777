@@ -28,7 +28,8 @@ SECRET_KEY = 'h6__pz5m$yk#s2l93$c6ux=%!r1hm%3h%5-^$pb9wzv5^gp*@3'
 DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
-
+MY_URLS = ['http://127.0.0.1:8000/', 'http://django-chat-test5050.herokuapp.com/']
+ACTIVE_URL = 0
 # Application definition
 
 INSTALLED_APPS = [
@@ -238,6 +239,7 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
+
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
     ],
@@ -249,8 +251,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=6),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
     'UPDATE_LAST_LOGIN': False,
@@ -278,8 +280,7 @@ SIMPLE_JWT = {
 }
 REST_SESSION_LOGIN = False
 REST_USE_JWT = True
-JWT_AUTH_COOKIE = 'jwt-access-token'           # you can set these
+JWT_AUTH_COOKIE = 'jwt-access-token'  # you can set these
 JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh-token'  # to anything
 JWT_AUTH_SECURE = True
 CORS_ALLOW_CREDENTIALS = True
-
