@@ -9,7 +9,7 @@ from .utils import setcookie, getcookie
 urlpatterns = [
     # path("", UserList.as_view(), name="all-users"),
     path("", UserApiListView.as_view(), name="all-users"),
-    path("<int:pk>/", UserApiDetailView.as_view(), name="all-users"),
+    path("<int:pk>/", UserApiDetailView.as_view(), name="user"),
     path("profile/", ProfileApiListView.as_view(), name="all-profiles"),
     path("profile/<int:pk>/", ProfileApiDetailView.as_view()),
 
