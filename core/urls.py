@@ -38,6 +38,6 @@ urlpatterns = [
     # rest django jwt auth
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    url(r'^api/login/', include('rest_social_auth.urls_jwt_pair')),
+    path('api/login/', include('rest_social_auth.urls_jwt_pair')),
 
 ]

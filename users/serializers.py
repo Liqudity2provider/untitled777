@@ -30,6 +30,10 @@ class UserSerializer(serializers.ModelSerializer):
         if data.get('password') != data.get('password2'):
             raise ValidationError('Passwords doesnt match')
         validate_password(password=data.get('password'))
+        if not data.get('email'):
+            raise ValidationError('Email is required')
+        if not data.get('username'):
+            raise ValidationError('Username is required')
         return data
 
     class Meta:
