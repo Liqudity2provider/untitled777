@@ -26,18 +26,25 @@ from users.views import UserRegister, UserProfile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # chat urls
     path('chat/', include('chat.urls')),
+
+    # users urls
     path('register/', UserRegister.as_view(), name='register'),
     path('profile/', UserProfile.as_view(), name='profile'),
     path('login/', user_views.LoginView.as_view(), name='login'),
     path('logout/', user_views.LogoutView.as_view(), name='logout'),
-    path('', include('blog.urls')),
-    path('films/', include('films.urls')),
     path("api/users/", include("users.urls"), name="api-users"),
-
     # rest django jwt auth
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/login/', include('rest_social_auth.urls_jwt_pair')),
+
+    # blog urls
+    path('', include('blog.urls')),
+
+    # films urls
+    path('films/', include('films.urls')),
+
 
 ]

@@ -3,6 +3,10 @@ from blog.models import Post
 
 
 class PostSerializer(serializers.ModelSerializer):
+    """
+    Serializer of Post model
+    """
+
     author = serializers.ReadOnlyField(source='author.username')
     author_image = serializers.ReadOnlyField(source='author.profile.image')
 

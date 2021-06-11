@@ -14,6 +14,10 @@ from users.models import Profile
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializer of User model
+    """
+
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
 
@@ -42,6 +46,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer of Profile model
+    """
+
     class Meta:
         model = Profile
         fields = ['image']
