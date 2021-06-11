@@ -29,6 +29,14 @@ headers = {'Content-Type': 'application/json'}
 
 
 class PostListView(APIView):
+    """
+    Post View returning:
+    - GET request - all posts (in reverse order of creation them)
+
+    Also checking that user in authenticated and token is valid or
+    redirect to logout view
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog/home.html'
 
@@ -52,6 +60,15 @@ class PostListView(APIView):
 
 
 class PostDetailView(APIView):
+    """
+    Post View returning:
+    - GET request - post(pk=pk)
+
+    Also checking that user in authenticated and token is valid or
+    redirect to logout view
+
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog/post_detail.html'
 
@@ -81,6 +98,16 @@ class PostDetailView(APIView):
 
 
 class PostCreateView(APIView):
+    """
+    Post View returning:
+    - GET request - Post create Form
+    - POST request - getting data from form and creating a new post
+
+    Also checking that user in authenticated and token is valid or
+    redirect to logout view
+
+    """
+
     model = Post
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog/post_form.html'
@@ -116,6 +143,16 @@ class PostCreateView(APIView):
 
 
 class PostUpdateView(APIView):
+    """
+    Post View returning:
+    - GET request - Post Form tp update post (instance=post)
+    - POST request - getting data from form and updating existing post
+
+    Also checking that user in authenticated and token is valid or
+    redirect to logout view
+
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
 
     def get(self, request, pk, *args, **kwargs):
@@ -152,6 +189,16 @@ class PostUpdateView(APIView):
 
 
 class PostDeleteView(APIView):
+    """
+    Post View returning:
+    - GET request - Post Form tp update post (instance=post)
+    - POST request - getting data from form and updating existing post
+
+    Also checking that user in authenticated and token is valid or
+    redirect to logout view
+
+    """
+
     model = Post
     success_url = '/'
     renderer_classes = [TemplateHTMLRenderer]

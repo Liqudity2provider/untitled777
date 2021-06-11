@@ -14,8 +14,8 @@ from blog.serializers import PostSerializer
 
 class PostApiListView(generics.ListCreateAPIView):
     """
-        List all posts, or create a new.
-        """
+    List all posts, or create a new.
+    """
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, ]

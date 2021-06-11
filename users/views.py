@@ -50,6 +50,12 @@ headers = {
 
 
 class UserRegister(generics.CreateAPIView):
+    """
+    User Register View returning:
+    - GET request - return HTML page with Form (Register Form)
+    - POST request - retrieve User data, creates new User and return Login page
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     serializer_class = UserSerializer
 
@@ -88,6 +94,16 @@ class UserRegister(generics.CreateAPIView):
 
 
 class UserProfile(APIView):
+    """
+    User Profile View returning:
+    - GET request - return HTML page with Profile of User and
+        User Update Form and Profile Update Form
+    - POST request - retrieve data, updates User and user`s Profile
+
+    Also checking that user in authenticated and token is valid or
+        redirect to logout view
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
 
     def post(self, request, *args, **kwargs):
@@ -123,6 +139,13 @@ class UserProfile(APIView):
 
 
 class LoginView(APIView):
+    """
+    User Login View returning:
+    - GET request - return HTML page with User Login Form
+    - POST request - retrieve data, authenticate User, create 'token' and 'refresh' and set them as cookie
+
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
 
     def get(self, request, *args, **kwargs):
@@ -158,6 +181,12 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
+    """
+    User Logout View returning:
+    - GET request - delete cookie and return Logout HTML page
+
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
 
     def get(self, request, *args, **kwargs):
