@@ -183,7 +183,7 @@ class LoginView(APIView):
 class LogoutView(APIView):
     """
     User Logout View returning:
-    - GET request - delete cookie and return Logout HTML page
+    - GET request - delete cookie and return Logout HTML page   
 
     """
 
