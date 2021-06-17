@@ -1,44 +1,14 @@
 import json
-
 import requests
-import rest_framework_simplejwt
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-from rest_framework.parsers import JSONParser
 from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework_simplejwt.backends import TokenBackend
-from rest_framework_simplejwt.views import TokenObtainPairView
-from django.core import serializers
-from django.forms.models import model_to_dict
-from rest_framework_simplejwt.models import TokenUser
-from rest_framework_simplejwt.views import token_obtain_pair
 from django.shortcuts import render, redirect
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.views.generic.detail import BaseDetailView
-from rest_framework import generics, permissions
 from django.contrib.auth import authenticate, login
-
-from blog.models import Post
-from blog.serializers import PostSerializer
 from core import settings
-from core.constants import jwt_service_object
-from django.views.generic import TemplateView
-from django.contrib.auth import logout, get_user_model
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from rest_social_auth.serializers import UserSerializer
-from rest_social_auth.views import KnoxAuthMixin, SimpleJWTAuthMixin
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserLoginForm
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Profile
 from .serializers import UserSerializer
 from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect
 

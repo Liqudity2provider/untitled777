@@ -16,19 +16,32 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
+from rest_framework.schemas import get_schema_view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from users import views as user_views
 from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt import views as jwt_views
 
 from users.views import UserRegister, UserProfile
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # chat urls
     path('chat/', include('chat.urls')),
 
+    path('openapi/', get_schema_view(
+        title="777",
+        description="777"
+    ), name='openapi-schema'),
+
+    path('docs/', TemplateView.as_view(
+        template_name='documentation.html',
+        extra_context={'schema_url': 'openapi-schema'}
+    ), name='swagger-ui'),
     # users urls
     path('register/', UserRegister.as_view(), name='register'),
     path('profile/', UserProfile.as_view(), name='profile'),

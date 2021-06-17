@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
+from rest_framework_swagger import renderers
 
 from blog.models import Post
 from blog.permissions import IsOwnerOrReadOnly
@@ -36,7 +37,7 @@ class ProfileApiDetailView(generics.RetrieveUpdateAPIView):
 
 class ProfileApiListView(generics.ListCreateAPIView):
     """
-        List all posts, or create a new.
+        List all profiles, or create a new.
         """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer

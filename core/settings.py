@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     # rest-social-auth
     'social_django',
     'rest_framework.authtoken',
-    'rest_social_auth'
+    'rest_social_auth',
+
+    'rest_framework_swagger',
 
 ]
 
@@ -75,7 +77,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
