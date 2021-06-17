@@ -10,19 +10,17 @@ from films.models import Genre, Film
 class ServiceUpdateFilmList(Service):
 
     def process(self):
-        Genre.objects.all().delete()
-        Film.objects.all().delete()
+        self.delete_all_objects()
 
-        list_genres = utils_parse.return_genres()
-        list_with_films = utils_parse.parse_func()
+        set_genres, list_with_films = self.get_data_from_parse_methods()
 
-        for genre in list_genres:
-            try:
-                new_genre = Genre(name=genre)
-                new_genre.save()
-            except:
-                pass
+        self.adding_genres_in_db_from_list(set_genres)
 
+        self.adding_films_in_db_from_list(list_with_films)
+        return True
+
+    @staticmethod
+    def adding_films_in_db_from_list(list_with_films):
         for film in list_with_films:
             try:
                 new_film = Film(name=film['name'], link=film['link'], image=film['image'],
@@ -34,7 +32,26 @@ class ServiceUpdateFilmList(Service):
                     new_film.save()
             except:
                 pass
-        return True
+
+    @staticmethod
+    def adding_genres_in_db_from_list(list_genres):
+        for genre in list_genres:
+            try:
+                new_genre = Genre(name=genre)
+                new_genre.save()
+            except:
+                pass
+
+    @staticmethod
+    def get_data_from_parse_methods():
+        set_genres = utils_parse.return_genres()
+        list_with_films = utils_parse.parse_func()
+        return set_genres, list_with_films
+
+    @staticmethod
+    def delete_all_objects():
+        Genre.objects.all().delete()
+        Film.objects.all().delete()
 
 
 class ServiceFilmDetailView(Service):
@@ -76,6 +93,6 @@ class AddNewComment(Service):
                 'context': context,
             }
         return {
-                'status': False,
-                'context': None,
-            }
+            'status': False,
+            'context': None,
+        }
