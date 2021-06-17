@@ -44,7 +44,12 @@ class PostListView(APIView):
         token = refresh_token_or_redirect(request)
 
         if not isinstance(token, str):
-            return redirect('logout')
+            response = Response(template_name='blog/home.html', data={
+                'user': None
+            })
+            response.delete_cookie('refresh')
+            response.delete_cookie('token')
+            return response
 
         response = requests.get(
             path + 'api/posts/',

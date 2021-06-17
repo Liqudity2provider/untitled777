@@ -2,13 +2,12 @@ import re
 import time
 import uuid
 
-import pytest
 import jwt
 from django.contrib.auth.models import User
-from django.urls import include, path, reverse
+from django.urls import reverse
 from rest_framework import status
 from rest_framework.exceptions import ErrorDetail
-from rest_framework.test import APITestCase, URLPatternsTestCase
+from rest_framework.test import APITestCase
 from users.tests.test_fixtures import CREATE_USER, UPDATE_USER, USER_BLANK_USERNAME, USER_NUMBER_PASSWORD, \
     USER_SHORT_PASSWORD, USER_WRONG_PASSWORD
 import core.settings
