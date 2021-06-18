@@ -81,3 +81,5 @@ uritemplate==3.0.1
 urllib3==1.26.4
 whitenoise==5.2.0
 zope.interface==5.1.0
+martor
+gunicorn
