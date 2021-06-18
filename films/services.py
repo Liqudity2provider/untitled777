@@ -1,5 +1,7 @@
 from abc import ABC
 
+from django.db import IntegrityError, OperationalError, DatabaseError
+from django.db.transaction import TransactionManagementError
 from service_objects.services import Service
 
 from films import utils_parse
@@ -30,7 +32,8 @@ class ServiceUpdateFilmList(Service):
                     genre = Genre.objects.filter(name__contains=genre).first()
                     new_film.genres.add(genre)
                     new_film.save()
-            except:
+            except DatabaseError:
+                # handling errors when adding objects to db
                 pass
 
     @staticmethod
@@ -39,7 +42,11 @@ class ServiceUpdateFilmList(Service):
             try:
                 new_genre = Genre(name=genre)
                 new_genre.save()
-            except:
+
+                new_genre = Genre(name=genre)
+                new_genre.save()
+            except DatabaseError:
+                # handling errors when adding objects to db
                 pass
 
     @staticmethod
