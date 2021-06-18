@@ -1,7 +1,9 @@
-import os
+import environ
 
-ENVIRONMENT = 'locale'
+env = environ.Env()
+environ.Env.read_env()
 
+ENVIRONMENT = env("ENVIRONMENT")
 
 if ENVIRONMENT == 'locale':
     from .local import *

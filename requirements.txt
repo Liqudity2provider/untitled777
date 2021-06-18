@@ -83,3 +83,5 @@ whitenoise==5.2.0
 zope.interface==5.1.0
 martor
 gunicorn
+
+django-role-permissions~=3.1.1
