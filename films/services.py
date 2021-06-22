@@ -43,8 +43,6 @@ class ServiceUpdateFilmList(Service):
                 new_genre = Genre(name=genre)
                 new_genre.save()
 
-                new_genre = Genre(name=genre)
-                new_genre.save()
             except DatabaseError:
                 # handling errors when adding objects to db
                 pass

@@ -73,6 +73,8 @@ MIDDLEWARE = [
 ]
 ROOT_URLCONF = 'core.urls'
 
+SITE_ID = 2
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -289,3 +291,16 @@ JWT_AUTH_COOKIE = 'jwt-access-token'  # you can set these
 JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh-token'  # to anything
 JWT_AUTH_SECURE = True
 CORS_ALLOW_CREDENTIALS = True
+
+ROLEPERMISSIONS_MODULE = 'core.roles'
+
+FIREBASE_CONFIG = {
+    'apiKey': "AIzaSyC_S0lPqRUwsbNJ0x-i-kv8RrHd5Coyqw8",
+    'authDomain': "memories-9ec47.firebaseapp.com",
+    'projectId': "memories-9ec47",
+    'serviceAccount': 'serviceAccountKeyFirebase.json',
+    'databaseURL': 'gs://memories-9ec47.appspot.com',
+    'storageBucket': "memories-9ec47.appspot.com",
+    # 'messagingSenderId': "132715411999",
+    # 'appId': "1:132715411999:web:1655dc229486eab8ba732a"
+}

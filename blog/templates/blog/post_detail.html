@@ -8,14 +8,26 @@
                 <small class="text-muted">{{ post.date_posted }}</small>
                 <div>
                     {% if post.author == user %}
-
                         <a class="btn btn-secondary mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
                         <a class="btn btn-danger mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
                     {% endif %}
                 </div>
             </div>
             <h2 class="article-title">{{ post.title }}</h2>
+            {% if post.category %}
+                <b><p class="article-title">Category: {{ post.category }}</p></b>
+            {% endif %}
             <p class="article-content">{{ post.content }}</p>
+            {% if post.image %}
+                <img class="center img-fluid mr-auto" src="{{ post.image }}">
+            {% endif %}
+            {% if post.video %}
+                <video class="center img-fluid mr-auto" width="540" controls>
+                    <source src='{{ post.video }}' type='video/mp4'>
+                    Your browser does not support the video tag.
+                </video>
+            {% endif %}
+
         </div>
     </article>
 {% endblock content %}

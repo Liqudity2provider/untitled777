@@ -1,11 +1,8 @@
-import environ
+import os
 
-env = environ.Env()
-environ.Env.read_env()
+ENVIRONMENT = os.environ.get("ENVIRONMENT")
 
-ENVIRONMENT = env("ENVIRONMENT")
-
-if ENVIRONMENT == 'locale':
+if ENVIRONMENT == 'local':
     from .local import *
 elif ENVIRONMENT == 'production':
     from .production import *

@@ -1,9 +1,12 @@
 import json
+import os
 
 import requests
+from django.conf.global_settings import FILE_UPLOAD_TEMP_DIR
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.sites.models import Site
+from django.core.files.uploadedfile import TemporaryUploadedFile
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -13,16 +16,19 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from core.settings import BASE_DIR
 from users.forms import UserLoginForm
 from users.utils import check_expiration, refresh_token_or_redirect
 from core import settings
 from users.utils import user_from_token
 from .forms import PostForm
-from .models import Post
+from .models import Post, TempVideo
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
+from .utils import save_picture, save_video
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
 headers = {'Content-Type': 'application/json'}
@@ -124,17 +130,27 @@ class PostCreateView(APIView):
             return redirect('logout')
 
         response = Response(template_name='blog/post_form.html', data={
-            "form": PostForm
+            "form": PostForm()
         })
         response.set_cookie('token', token)
         return response
 
     def post(self, request, *args, **kwargs):
         token = request.COOKIES.get('token')
+
         form_data = {
             "title": request.data.get("title"),
+            "category": request.data.get("category"),
             "content": request.data.get("content"),
         }
+
+        if request.FILES.get('image'):
+            url_to_image = save_picture(request.FILES.get('image'))
+            form_data.update({'image': url_to_image})
+        if request.FILES.get('video'):
+            url_to_video = save_video(request.FILES['video'])
+            form_data.update({'video': url_to_video})
+
         headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json',
@@ -176,10 +192,20 @@ class PostUpdateView(APIView):
 
     def post(self, request, pk, *args, **kwargs):
         token = request.COOKIES.get('token')
+
         form_data = {
             "title": request.data.get("title"),
+            "category": request.data.get("category"),
             "content": request.data.get("content"),
         }
+
+        if request.FILES.get('image'):
+            url_to_image = save_picture(request.FILES.get('image'))
+            form_data.update({'image': url_to_image})
+        if request.FILES.get('video'):
+            url_to_video = save_video(request.FILES['video'])
+            form_data.update({'video': url_to_video})
+
         headers = {
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json',
