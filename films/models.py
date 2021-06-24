@@ -11,7 +11,8 @@ class Genre(models.Model):
 
 
 class Film(models.Model):
-    name = models.CharField(max_length=100, help_text="Film naming")
+    name = models.CharField(max_length=100, help_text="Film naming", unique=True)
+    description = models.TextField(max_length=1000, blank=True)
     image = models.CharField(max_length=500, )
     link = models.CharField(max_length=500, )
     rating = models.FloatField()
@@ -34,9 +35,18 @@ class Comment(MPTTModel):
     content = models.TextField()
     publish = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
+    deleted = models.BooleanField(default=False)
+    reason_for_deleting = models.TextField(blank=True)
 
     class MPTTMeta:
         order_insertion_by = ['publish']
 
     def __str__(self):
         return self.content
+
+    def delete(self, *args, **kwargs):
+        for children in self.get_children():
+            children.delete()
+        self.deleted = True
+        self.save()
+        return self.deleted

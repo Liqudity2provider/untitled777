@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'crispy_forms',
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
     'rolepermissions',
 
 ]
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # (django admin page interface) only if django version >= 3.0
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',

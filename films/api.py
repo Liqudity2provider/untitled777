@@ -27,6 +27,5 @@ class CommentApiListView(generics.ListCreateAPIView):
     """
         List all comments, or create a new.
         """
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.filter(deleted=False)
     serializer_class = CommentSerializer
-    model = Comment

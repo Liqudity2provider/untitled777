@@ -7,7 +7,7 @@ from .views import FilmSearchView, FilmDetailView, FilmsMainPage, UpdateFilmList
 
 urlpatterns = [
     path('', FilmsMainPage.as_view(), name='films'),
-    path('films/<str:params>/', FilmsMainPage.as_view(), name='film'),
+    path('films/<str:params>/', FilmsMainPage.as_view(), name='index'),
     path('films/', FilmsMainPage.as_view(), name='index'),
     path('film/<int:pk>/', FilmDetailView.as_view(), name='film-detail'),
     path('update_db/', UpdateFilmList.as_view(), name='update-db'),
@@ -16,5 +16,4 @@ urlpatterns = [
     path('api/<int:pk>', FilmApiDetailView.as_view(), name='api-film'),
     path('api/comment', CommentApiListView.as_view()),
     path('api/comment/<int:pk>', CommentApiDetailView.as_view()),
-
 ]

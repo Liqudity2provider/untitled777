@@ -12,7 +12,6 @@ from films.models import Genre, Film
 class ServiceUpdateFilmList(Service):
 
     def process(self):
-        self.delete_all_objects()
 
         set_genres, list_with_films = self.get_data_from_parse_methods()
 
@@ -67,7 +66,7 @@ class ServiceFilmDetailView(Service):
 
         context = {
             'object': film_to_show,
-            'comments': film_to_show.comments.all(),
+            'comments': film_to_show.comments.filter(deleted=False),
             'comment_form': comment_form,
         }
         return context
@@ -90,7 +89,7 @@ class AddNewComment(Service):
 
             context = {
                 'object': film_to_show,
-                'comments': film_to_show.comments.all(),
+                'comments': film_to_show.comments.filter(deleted=False),
                 'comment_form': comment_form,
             }
             return {

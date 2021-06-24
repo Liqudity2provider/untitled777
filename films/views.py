@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from films.models import Film, Genre
 from films.services import ServiceUpdateFilmList, ServiceFilmDetailView, AddNewComment
-from users.utils import refresh_token_or_redirect
+from users.utils import refresh_token_or_redirect, user_from_token
 
 
 class FilmsMainPage(APIView):
@@ -23,6 +23,7 @@ class FilmsMainPage(APIView):
         contex = {
             'data_films': Film.objects.all(),
             'genres': Genre.objects.all(),
+            'user': user_from_token(token),
         }
         if kwargs.get('params'):
             contex['data_films'] = Film.objects.filter(genres__name=kwargs.get('params'))
@@ -65,6 +66,7 @@ class FilmDetailView(DetailView):
 
         context = ServiceFilmDetailView.execute({
             'pk': kwargs['pk'],
+            'user': user_from_token(token),
         })
         return render(request, 'film/film_detail.html', context=context)
 
