@@ -33,12 +33,15 @@ class FilmAdmin(admin.ModelAdmin):
     list_display = ['name', 'rating', 'film_actions', 'film_comments']
     list_editable = ['rating']
     fields = ['name', 'description', 'image', 'link', 'rating', 'genres']
-    readonly_fields = []
     list_display_links = ['name']
 
     def film_comments(self, obj):
+
+        info = (self.model._meta.app_label, 'comment')
+        href = '/%s/%s/%s/' % ((self.admin_site.name,) + info)
+
         return format_html(
-            f"<a href='/admin/films/comment/?e={obj.id}'> Comments </a>"
+            f"<a href='{href}?film_id={obj.id}'> Comments </a>"
         )
 
     def film_actions(self, obj):
@@ -67,8 +70,6 @@ admin.site.register(Genre)
 class CommentAdmin(MPTTModelAdmin):
 
     list_display = ['content', 'film', 'author', 'deleted']
-    fields = []
-    readonly_fields = []
 
     def get_fields(self, request, obj=None):
         if request.user.is_superuser:
@@ -86,9 +87,11 @@ class CommentAdmin(MPTTModelAdmin):
             return self.fields
 
     def get_queryset(self, request):
-        e = request.GET.get('e')
-        if e:
-            return Film.objects.get(pk=e).comments
+        film_id = request.GET.get('film_id')
+        if film_id:
+            request.GET._mutable = True
+
+            return Film.objects.get(pk=film_id).comments
         return Comment.objects.all()
 
 

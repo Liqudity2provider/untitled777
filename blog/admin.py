@@ -3,7 +3,7 @@ from rolepermissions.checkers import has_permission, has_role
 from rolepermissions.roles import get_user_roles
 
 from core.roles import PostModerator
-from .models import Post, TempVideo
+from .models import Post, TempVideo, Category
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -19,7 +19,6 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ['pk', 'title', 'category']
     list_editable = ['category']
     fields = ['title', 'content', 'category', 'image', 'video', 'author', 'date_posted']
-    readonly_fields = []
     list_display_links = ['pk', 'title', ]
 
     def get_readonly_fields(self, request, obj=None):
@@ -34,3 +33,4 @@ class PostAdmin(admin.ModelAdmin):
 admin.site.register(Post, PostAdmin)
 
 admin.site.register(TempVideo)
+admin.site.register(Category)

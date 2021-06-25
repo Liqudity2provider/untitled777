@@ -28,10 +28,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
-from .utils import save_picture, save_video
+from .utils import save_picture, save_video, return_form_data_for_post, auth_headers, update_form_data_with_media
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
-headers = {'Content-Type': 'application/json'}
 
 
 class PostListView(APIView):
@@ -42,7 +41,7 @@ class PostListView(APIView):
     Also checking that user in authenticated and token is valid or
     redirect to logout view
     """
-
+    headers = {'Content-Type': 'application/json'}
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog/home.html'
 
@@ -59,7 +58,7 @@ class PostListView(APIView):
 
         response = requests.get(
             path + 'api/posts/',
-            headers=headers,
+            headers=self.headers,
             data=request.data,
         )
         output = response.json()
@@ -79,7 +78,7 @@ class PostDetailView(APIView):
     redirect to logout view
 
     """
-
+    headers = {'Content-Type': 'application/json'}
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog/post_detail.html'
 
@@ -92,7 +91,7 @@ class PostDetailView(APIView):
         username = ""
         api_response = requests.get(
             path + 'api/posts/' + str(pk),
-            headers=headers,
+            headers=self.headers,
             data=request.data
         )
 
@@ -138,26 +137,14 @@ class PostCreateView(APIView):
     def post(self, request, *args, **kwargs):
         token = request.COOKIES.get('token')
 
-        form_data = {
-            "title": request.data.get("title"),
-            "category": request.data.get("category"),
-            "content": request.data.get("content"),
-        }
+        form_data = return_form_data_for_post(request)
 
-        if request.FILES.get('image'):
-            url_to_image = save_picture(request.FILES.get('image'))
-            form_data.update({'image': url_to_image})
-        if request.FILES.get('video'):
-            url_to_video = save_video(request.FILES['video'])
-            form_data.update({'video': url_to_video})
+        if request.FILES.get('image') or request.FILES.get('video'):
+            form_data = update_form_data_with_media(request, form_data)
 
-        headers = {
-            'Authorization': f'Bearer {token}',
-            'Content-Type': 'application/json',
-        }
         requests.post(
             path + 'api/posts/',
-            headers=headers,
+            headers=auth_headers(token),
             data=json.dumps(form_data))
 
         return redirect('blog-home')
@@ -193,26 +180,14 @@ class PostUpdateView(APIView):
     def post(self, request, pk, *args, **kwargs):
         token = request.COOKIES.get('token')
 
-        form_data = {
-            "title": request.data.get("title"),
-            "category": request.data.get("category"),
-            "content": request.data.get("content"),
-        }
+        form_data = return_form_data_for_post(request)
 
-        if request.FILES.get('image'):
-            url_to_image = save_picture(request.FILES.get('image'))
-            form_data.update({'image': url_to_image})
-        if request.FILES.get('video'):
-            url_to_video = save_video(request.FILES['video'])
-            form_data.update({'video': url_to_video})
+        if request.FILES.get('image') or request.FILES.get('video'):
+            form_data = update_form_data_with_media(request, form_data)
 
-        headers = {
-            'Authorization': f'Bearer {token}',
-            'Content-Type': 'application/json',
-        }
         requests.put(
             path + 'api/posts/' + str(pk) + '/',
-            headers=headers,
+            headers=auth_headers(token),
             data=json.dumps(form_data)
         )
 
@@ -239,17 +214,11 @@ class PostDeleteView(APIView):
 
         if not isinstance(token, str):
             return redirect('logout')
-        form_data = {
-            "title": request.data.get("title"),
-            "content": request.data.get("content"),
-        }
-        headers = {
-            'Authorization': f'Bearer {token}',
-            'Content-Type': 'application/json',
-        }
+        form_data = return_form_data_for_post(request)
+
         api_response = requests.get(
             path + 'api/posts/' + str(pk) + '/',
-            headers=headers,
+            headers=auth_headers(token),
             data=json.dumps(form_data))
 
         output = api_response.json()
@@ -261,12 +230,10 @@ class PostDeleteView(APIView):
 
     def post(self, request, pk, *args, **kwargs):
         token = request.COOKIES.get('token')
+
         requests.delete(
             path + 'api/posts/' + str(pk) + '/',
-            headers={
-                'Authorization': f'Bearer {token}',
-                'Content-Type': 'application/json',
-            },
+            headers=auth_headers(token),
             data=json.dumps({'data': "None"})
         )
         return redirect('blog-home')

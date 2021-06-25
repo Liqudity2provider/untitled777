@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework.authtoken',
     'rest_social_auth',
-
     'rest_framework_swagger',
     'rolepermissions',
 
@@ -80,10 +79,15 @@ SITE_ID = 2
 
 TEMPLATES = [
     {
+
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
+            # for swagger
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -247,6 +251,8 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
+    # for swagger
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'

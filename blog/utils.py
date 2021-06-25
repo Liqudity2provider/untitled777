@@ -14,6 +14,32 @@ current_path = os.path.dirname(__file__) + '/staticfiles/temp/'
 FIREBASE_CONFIG = core.settings.FIREBASE_CONFIG
 
 
+def auth_headers(token):
+    return {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json',
+    }
+
+
+def update_form_data_with_media(request, form_data):
+    if request.FILES.get('video'):
+        url_to_video = save_video(request.FILES['video'])
+        form_data.update({'video': url_to_video})
+    if request.FILES.get('image'):
+        url_to_image = save_picture(request.FILES.get('image'))
+        form_data.update({'image': url_to_image})
+    return form_data
+
+
+def return_form_data_for_post(request):
+    form_data = {
+        "title": request.data.get("title"),
+        "category": request.data.get("category"),
+        "content": request.data.get("content"),
+    }
+    return form_data
+
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.name)

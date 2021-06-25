@@ -28,6 +28,7 @@ class ServiceUpdateFilmList(Service):
                                 rating=film['rating'], )
                 new_film.save()
                 for genre in film['genres']:
+
                     genre = Genre.objects.filter(name__contains=genre).first()
                     new_film.genres.add(genre)
                     new_film.save()

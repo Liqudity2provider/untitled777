@@ -7,42 +7,34 @@ from rest_framework.exceptions import ErrorDetail
 from rest_framework.test import APITestCase
 
 from blog.models import Post
-from blog.tests.test_fixtures import CREATE_POST, CREATE_POST_WITHOUT_TITLE, CREATE_POST_WITHOUT_CONTENT, UPDATE_POST
+from blog.tests.models_to_use_in_tests import CREATE_POST, CREATE_POST_WITHOUT_TITLE, CREATE_POST_WITHOUT_CONTENT, \
+    UPDATE_POST
 from users.utils import get_tokens_for_user, set_expiration_time_token
-
-
-def create_user_return_token_and_url_api_posts(name_url):
-    """
-    Return token, url (using reverse function), and created user
-    """
-
-    url = reverse(name_url)
-    user = User.objects.create_user(username=str(uuid.uuid4()), password='test1d234')
-    pair_tokens = get_tokens_for_user(user)
-    token = pair_tokens.get('token')
-    return token, url, user
 
 
 class PostTests(APITestCase):
     """
     Class testing Post rest API functionality
     """
-    fixtures = ['fixtures.json']
+
+    def setUp(self) -> None:
+        self.user = User.objects.create_user(username=str(uuid.uuid4()))
+        self.pair_tokens = get_tokens_for_user(self.user)
+        self.token = self.pair_tokens['token']
 
     def test_get_post(self):
         """
         Testing GET request to existing Post
         """
 
-        user = User.objects.get(pk=1)
-        post = Post.objects.create(**CREATE_POST, author=user)
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 1})
 
         response = self.client.get(url, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Post.objects.count(), 1)
         self.assertEqual([response.data.get('author'), response.data.get('title'), response.data.get('content')], [
-            user.username, post.title, post.content,
+            self.user.username, post.title, post.content,
         ])
 
     def test_get_non_existing_post(self):
@@ -50,8 +42,7 @@ class PostTests(APITestCase):
         Testing GET request to not existing Post
         """
 
-        user = User.objects.get(pk=1)
-        post = Post.objects.create(**CREATE_POST, author=user)
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 99})
 
         response = self.client.get(url, format='json')
@@ -64,9 +55,8 @@ class PostTests(APITestCase):
         Testing POST request to create Post using JWT token auth
         """
         url = reverse('api-posts')
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
 
-        response = self.client.post(url, data=CREATE_POST, format='json', HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.post(url, data=CREATE_POST, format='json', HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Post.objects.count(), 1)
@@ -77,9 +67,8 @@ class PostTests(APITestCase):
         """
 
         url = reverse('api-posts')
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
 
-        changed_exp_in_token = set_expiration_time_token(token, 1500000000)
+        changed_exp_in_token = set_expiration_time_token(self.token, 1500000000)
         response = self.client.post(url, data=CREATE_POST, format='json',
                                     HTTP_AUTHORIZATION=f'Bearer {changed_exp_in_token}')
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -92,10 +81,9 @@ class PostTests(APITestCase):
         """
 
         url = reverse('api-posts')
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
 
         response = self.client.post(url, data=CREATE_POST_WITHOUT_TITLE, format='json',
-                                    HTTP_AUTHORIZATION=f'Bearer {token}')
+                                    HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data,
@@ -108,10 +96,9 @@ class PostTests(APITestCase):
         """
 
         url = reverse('api-posts')
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
 
         response = self.client.post(url, data=CREATE_POST_WITHOUT_CONTENT, format='json',
-                                    HTTP_AUTHORIZATION=f'Bearer {token}')
+                                    HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data,
@@ -137,28 +124,25 @@ class PostTests(APITestCase):
         Testing PUT request to update Post (using JWT token auth)
         """
 
-        user = User.objects.get(pk=1)
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
         url = reverse('api-post', kwargs={'pk': 1})
-        post = Post.objects.create(**CREATE_POST, author=user)
+        post = Post.objects.create(**CREATE_POST, author=self.user)
 
-        response = self.client.put(url, data=UPDATE_POST, format='json', HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.put(url, data=UPDATE_POST, format='json', HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Post.objects.count(), 1)
-        self.assertEqual(Post.objects.get(pk=1).author, user)
+        self.assertEqual(Post.objects.get(pk=1).author, self.user)
 
     def test_update_post_validaton_title(self):
         """
         Testing PUT request to update Post without title (using JWT token auth)
         """
 
-        token, url, user = create_user_return_token_and_url_api_posts('api-posts')
-        post = Post.objects.create(**CREATE_POST, author=user)
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 1})
 
         response = self.client.put(url, data=CREATE_POST_WITHOUT_TITLE, format='json',
-                                   HTTP_AUTHORIZATION=f'Bearer {token}')
+                                   HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data,
                          {'title': [ErrorDetail(string='This field may not be blank.', code='blank')]})
@@ -169,12 +153,11 @@ class PostTests(APITestCase):
         Testing PUT request to update Post without content (using JWT token auth)
         """
 
-        token, url, user = create_user_return_token_and_url_api_posts('api-posts')
-        post = Post.objects.create(**CREATE_POST, author=user)
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 1})
 
         response = self.client.put(url, data=CREATE_POST_WITHOUT_CONTENT, format='json',
-                                   HTTP_AUTHORIZATION=f'Bearer {token}')
+                                   HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data,
                          {'content': [ErrorDetail(string='This field may not be blank.', code='blank')]})
@@ -185,7 +168,7 @@ class PostTests(APITestCase):
         Testing PUT request to update Post without auth
         """
 
-        post = Post.objects.create(**CREATE_POST, author=User.objects.get(pk=1))
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 1})
 
         response = self.client.put(url, data=CREATE_POST_WITHOUT_CONTENT, format='json')
@@ -200,12 +183,10 @@ class PostTests(APITestCase):
         Testing DELETE request to delete Post (using JWT token auth)
         """
 
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
-
-        post = Post.objects.create(**CREATE_POST, author=User.objects.get(pk=1))
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 1})
 
-        response = self.client.delete(url, format='json', HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.delete(url, format='json', HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(list(Post.objects.all()), [])
 
@@ -214,12 +195,10 @@ class PostTests(APITestCase):
         Testing DELETE request to delete non existing Post (using JWT token auth)
         """
 
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
-
-        post = Post.objects.create(**CREATE_POST, author=User.objects.get(pk=1))
+        post = Post.objects.create(**CREATE_POST, author=self.user)
         url = reverse('api-post', kwargs={'pk': 888})
 
-        response = self.client.delete(url, format='json', HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.delete(url, format='json', HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(Post.objects.count(), 1)
 
@@ -228,12 +207,10 @@ class PostTests(APITestCase):
         Testing DELETE request to delete Post by another user credentials (using JWT token auth)
         """
 
-        token = get_tokens_for_user(User.objects.get(pk=1)).get('token')
-
         user_2 = User.objects.create_user(username=uuid.uuid4(), password='password1029387')
         post = Post.objects.create(**CREATE_POST, author=user_2)
         url = reverse('api-post', kwargs={'pk': 1})
 
-        response = self.client.delete(url, format='json', HTTP_AUTHORIZATION=f'Bearer {token}')
+        response = self.client.delete(url, format='json', HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Post.objects.count(), 1)

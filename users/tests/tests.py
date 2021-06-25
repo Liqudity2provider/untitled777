@@ -8,7 +8,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.exceptions import ErrorDetail
 from rest_framework.test import APITestCase
-from users.tests.test_fixtures import CREATE_USER, UPDATE_USER, USER_BLANK_USERNAME, USER_NUMBER_PASSWORD, \
+from users.tests.models_to_use_in_tests import CREATE_USER, UPDATE_USER, USER_BLANK_USERNAME, USER_NUMBER_PASSWORD, \
     USER_SHORT_PASSWORD, USER_WRONG_PASSWORD
 import core.settings
 from core import settings
@@ -168,19 +168,20 @@ class TokenTests(APITestCase):
     """
     Class testing Token rest API functionality
     """
-    fixtures = ['fixtures.json']
+
+    def setUp(self) -> None:
+        self.user = User.objects.create(username=str(uuid.uuid4()))
+        self.user.set_password('test_password')
+        self.user.save()
+        self.pair_tokens = get_tokens_for_user(self.user)
 
     def test_create_token(self):
         """
         Testing POST request to create Token for User
         """
 
-        user = User.objects.create(username=str(uuid.uuid4()))
-        user.set_password('test_password')
-        user.save()
-
         data = {
-            "username": user.username,
+            "username": self.user.username,
             "password": 'test_password',
         }
         url = reverse('token_obtain_pair')
@@ -195,8 +196,7 @@ class TokenTests(APITestCase):
         """
         Get user and 2 tokens from method and check encoding and decoding of token
         """
-        user = User.objects.get(pk=1)
-        refresh = get_tokens_for_user(user).get('refresh')
+        refresh = self.pair_tokens.get('refresh')
         decoded = jwt.decode(refresh, options={"verify_signature": False})
         encoded = jwt.encode(decoded, key=core.settings.SECRET_KEY)
         self.assertEqual(encoded, refresh)
@@ -209,10 +209,9 @@ class TokenTests(APITestCase):
         checking token expiration using special method
         asserting result from special method and what we waiting for
         """
-        user = User.objects.get(pk=1)
-        pair_tokens = get_tokens_for_user(user)
-        changed_exp_in_token = set_expiration_time_token(pair_tokens.get('token'), 1500000000)
-        changed_exp_in_refresh = set_expiration_time_token(pair_tokens.get('refresh'), 1500000000)
+
+        changed_exp_in_token = set_expiration_time_token(self.pair_tokens.get('token'), 1500000000)
+        changed_exp_in_refresh = set_expiration_time_token(self.pair_tokens.get('refresh'), 1500000000)
 
         result_of_checking = check_expiration(token=changed_exp_in_token, refresh=changed_exp_in_refresh)
         self.assertEqual(result_of_checking, {
@@ -227,10 +226,8 @@ class TokenTests(APITestCase):
         Getting time of token expiration using settings and aggregating now time and difference
         Checking that time expiration of token matches with settings values
         """
-        user = User.objects.get(pk=1)
-        pair_tokens = get_tokens_for_user(user)
 
-        token = pair_tokens['token']
+        token = self.pair_tokens['token']
 
         time_exp_token = jwt.decode(token, options={"verify_signature": False}).get('exp')
         time_when_should_expire = (time.time() + settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME').total_seconds())

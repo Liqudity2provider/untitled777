@@ -41,9 +41,6 @@ class UserRegister(generics.CreateAPIView):
             "password": request.data.get("password1"),
             "password2": request.data.get("password2")
         }
-        headers = {
-            'Content-Type': 'application/json',
-        }
         response = requests.post(
             path + 'api/users/',
             headers=headers,
