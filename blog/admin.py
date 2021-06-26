@@ -3,7 +3,7 @@ from rolepermissions.checkers import has_permission, has_role
 from rolepermissions.roles import get_user_roles
 
 from core.roles import PostModerator
-from .models import Post, TempVideo, Category
+from .models import Post, Category
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -32,5 +32,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 
-admin.site.register(TempVideo)
 admin.site.register(Category)

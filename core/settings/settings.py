@@ -57,9 +57,17 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_social_auth',
     'rest_framework_swagger',
+    # roles in admin page
     'rolepermissions',
 
+    # to store files in DropBox
+    'django_dropbox_storage',
+
 ]
+# DropBox
+DEFAULT_FILE_STORAGE = 'django_dropbox_storage.storage.DropboxStorage'
+DROPBOX_ACCESS_TOKEN = 'K8Oox5d-iMwAAAAAAAAAAS0VdDVcD7DdqLwPAhaU9lW-d4EhfROw5jVQCUqQUBXa'
+
 X_FRAME_OPTIONS = 'SAMEORIGIN'  # (django admin page interface) only if django version >= 3.0
 
 MIDDLEWARE = [
@@ -313,3 +321,5 @@ FIREBASE_CONFIG = {
     # 'messagingSenderId': "132715411999",
     # 'appId': "1:132715411999:web:1655dc229486eab8ba732a"
 }
+
+

@@ -1,3 +1,4 @@
+import base64
 import json
 import os
 
@@ -6,12 +7,15 @@ from django.conf.global_settings import FILE_UPLOAD_TEMP_DIR
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.sites.models import Site
-from django.core.files.uploadedfile import TemporaryUploadedFile
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import TemporaryUploadedFile, InMemoryUploadedFile
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from rest_framework import generics, permissions, status
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
+from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -23,12 +27,13 @@ from users.utils import check_expiration, refresh_token_or_redirect
 from core import settings
 from users.utils import user_from_token
 from .forms import PostForm
-from .models import Post, TempVideo
+from .models import Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
-from .utils import save_picture, save_video, return_form_data_for_post, auth_headers, update_form_data_with_media
+from .utils import save_picture, return_form_data_for_post, auth_headers, update_form_data_with_media, \
+    return_files_data_for_post
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
 
@@ -117,7 +122,6 @@ class PostCreateView(APIView):
     redirect to logout view
 
     """
-
     model = Post
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog/post_form.html'
@@ -136,16 +140,19 @@ class PostCreateView(APIView):
 
     def post(self, request, *args, **kwargs):
         token = request.COOKIES.get('token')
+        headers = {
+            'Authorization': f'Bearer {token}',
+        }
 
         form_data = return_form_data_for_post(request)
+        files = return_files_data_for_post(request)
 
-        if request.FILES.get('image') or request.FILES.get('video'):
-            form_data = update_form_data_with_media(request, form_data)
-
-        requests.post(
+        response = requests.post(
             path + 'api/posts/',
-            headers=auth_headers(token),
-            data=json.dumps(form_data))
+            headers=headers,
+            data=form_data,
+            files=files
+        )
 
         return redirect('blog-home')
 

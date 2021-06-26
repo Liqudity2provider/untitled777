@@ -1,3 +1,4 @@
+import base64
 import os
 import secrets
 import uuid
@@ -6,7 +7,6 @@ import ffmpeg
 import pyrebase as pyrebase
 from PIL import Image
 import core.settings
-from blog.models import TempVideo
 from core.settings import BASE_DIR
 
 current_path = os.path.dirname(__file__) + '/staticfiles/temp/'
@@ -31,12 +31,24 @@ def update_form_data_with_media(request, form_data):
     return form_data
 
 
+def return_files_data_for_post(request):
+    files_data = dict()
+    image = request.FILES.get('image')
+    video = request.FILES.get('video')
+    if image:
+        files_data.update({'image': image})
+    if video:
+        files_data.update({'video': video})
+    return files_data
+
+
 def return_form_data_for_post(request):
     form_data = {
         "title": request.data.get("title"),
         "category": request.data.get("category"),
         "content": request.data.get("content"),
     }
+
     return form_data
 
 
@@ -86,20 +98,20 @@ def delete_obj():
     pass
 
 
-def save_video(video_instance):
-    # get uniq name for TempVideo Model
-    uniq_name = str(uuid.uuid4())
-
-    # creating instance of TempVideo
-    instance = TempVideo(video_name=uniq_name, videofile=video_instance)
-    instance.save()
-
-    # setting var with path of video instance
-    video_path = instance.videofile.path
-
-    # get extension of video file
-    _, f_ext = os.path.splitext(video_path)
-    url = put_image(video_path, uniq_name)
-    os.remove(video_path)
-    instance.delete()
-    return url
+# def save_video(video_instance):
+#     # get uniq name for TempVideo Model
+#     uniq_name = str(uuid.uuid4())
+#
+#     # creating instance of TempVideo
+#     instance = TempVideo(video_name=uniq_name, videofile=video_instance)
+#     instance.save()
+#
+#     # setting var with path of video instance
+#     video_path = instance.videofile.path
+#
+#     # get extension of video file
+#     _, f_ext = os.path.splitext(video_path)
+#     url = put_image(video_path, uniq_name)
+#     os.remove(video_path)
+#     instance.delete()
+#     return url
