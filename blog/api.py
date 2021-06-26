@@ -5,6 +5,7 @@ from django.core import serializers
 from django.forms import model_to_dict
 from django.http import JsonResponse
 from rest_framework import generics, permissions
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 
 from blog.models import Post

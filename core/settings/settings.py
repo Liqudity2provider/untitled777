@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'crispy_forms',
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,9 +55,20 @@ INSTALLED_APPS = [
     # rest-social-auth
     'social_django',
     'rest_framework.authtoken',
-    'rest_social_auth'
+    'rest_social_auth',
+    'rest_framework_swagger',
+    # roles in admin page
+    'rolepermissions',
+
+    # to store files in DropBox
+    'django_dropbox_storage',
 
 ]
+# DropBox
+DEFAULT_FILE_STORAGE = 'django_dropbox_storage.storage.DropboxStorage'
+DROPBOX_ACCESS_TOKEN = 'K8Oox5d-iMwAAAAAAAAAAS0VdDVcD7DdqLwPAhaU9lW-d4EhfROw5jVQCUqQUBXa'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'  # (django admin page interface) only if django version >= 3.0
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -68,16 +81,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
-SITE_ID = 2
-
 ROOT_URLCONF = 'core.urls'
+
+SITE_ID = 2
 
 TEMPLATES = [
     {
+
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
+            # for swagger
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            },
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -144,7 +162,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = os.path.join(BASE_DIR, "static/")
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -241,6 +259,8 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
+    # for swagger
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
@@ -248,6 +268,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 
@@ -287,3 +308,18 @@ JWT_AUTH_COOKIE = 'jwt-access-token'  # you can set these
 JWT_AUTH_REFRESH_COOKIE = 'jwt-refresh-token'  # to anything
 JWT_AUTH_SECURE = True
 CORS_ALLOW_CREDENTIALS = True
+
+ROLEPERMISSIONS_MODULE = 'core.roles'
+
+FIREBASE_CONFIG = {
+    'apiKey': "AIzaSyC_S0lPqRUwsbNJ0x-i-kv8RrHd5Coyqw8",
+    'authDomain': "memories-9ec47.firebaseapp.com",
+    'projectId': "memories-9ec47",
+    'serviceAccount': 'serviceAccountKeyFirebase.json',
+    'databaseURL': 'gs://memories-9ec47.appspot.com',
+    'storageBucket': "memories-9ec47.appspot.com",
+    # 'messagingSenderId': "132715411999",
+    # 'appId': "1:132715411999:web:1655dc229486eab8ba732a"
+}
+
+

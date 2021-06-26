@@ -1,8 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from django.forms import model_to_dict
-
-from core.constants import jwt_service_object
 
 
 class Profile(models.Model):

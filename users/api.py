@@ -3,7 +3,9 @@ import json
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from rest_framework import generics, permissions, status
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
+from rest_framework_swagger import renderers
 
 from blog.models import Post
 from blog.permissions import IsOwnerOrReadOnly
@@ -14,7 +16,7 @@ from users.serializers import UserSerializer, ProfileSerializer
 
 class UserApiListView(generics.ListCreateAPIView):
     """
-        List all posts, or create a new.
+        List all users, or create a new.
         """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -23,7 +25,7 @@ class UserApiListView(generics.ListCreateAPIView):
 
 class UserApiDetailView(generics.RetrieveUpdateAPIView):
     """
-    Retrieve, update or delete a post instance.
+    Retrieve, update or delete a user instance.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -36,7 +38,7 @@ class ProfileApiDetailView(generics.RetrieveUpdateAPIView):
 
 class ProfileApiListView(generics.ListCreateAPIView):
     """
-        List all posts, or create a new.
+        List all profiles, or create a new.
         """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer

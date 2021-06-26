@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     """
     Model of Post with next fields:
@@ -12,6 +19,9 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100)
     content = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(blank=True, upload_to='photos')
+    video = models.FileField(blank=True, upload_to='videos')
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
 
@@ -23,3 +33,4 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-date_posted']
+

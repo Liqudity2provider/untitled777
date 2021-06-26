@@ -1,4 +1,5 @@
 
+{% load permission_tags %}
 <!DOCTYPE html>
 {% load mptt_tags %}
 
@@ -135,11 +136,9 @@
                             Выбрать жанр
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item"
-                                       href="{% url 'index' %}">Все фильмы</a>
                             {% if genres %}
                                 <a class="dropdown-item"
-                                       href="{% url 'index' %}">Все фильмы</a>
+                                   href="{% url 'index' %}">Все фильмы</a>
                                 {% for genre in genres %}
                                     <a class="dropdown-item"
                                        href="{% url 'index' params=genre.name %}">{{ genre.name }}</a>
@@ -150,8 +149,11 @@
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
-                    <a href="{% url 'search' %}" class="nav-item nav-link" id="btn1">Поиск</a>
+                    {% if user|has_role:'film_moderator' %}
+                        <a href="{% url 'update-db' %}" class="nav-item nav-link" id="btn1">Обновить базу фильмов</a>
+                    {% endif %}
 
+                    <a href="{% url 'search' %}" class="nav-item nav-link" id="btn1">Поиск</a>
                 </div>
             </div>
         </div>
