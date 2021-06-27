@@ -112,5 +112,5 @@ dmypy.json
 .idea
 # Pyre type checker
 .pyre/
-#db.sqlite3
+db.sqlite3
 .idea
