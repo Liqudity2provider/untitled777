@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category
+from .models import Post, Categor
 
 
 class PostForm(forms.ModelForm):
@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
     Form for creating and updating Post model
     """
     title = forms.CharField()
-    category = forms.ModelChoiceField(required=False, queryset=Category.objects.all())
+    category = forms.ModelChoiceField(required=False, queryset=Categor.objects.all())
     image = forms.ImageField(required=False)
     video = forms.FileField(required=False)
     content = forms.CharField(
