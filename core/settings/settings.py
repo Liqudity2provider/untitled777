@@ -63,6 +63,10 @@ INSTALLED_APPS = [
     # to store files in DropBox
     'django_dropbox_storage',
 
+    # swagger v2
+    # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
+    'drf_yasg',
+
 ]
 # DropBox
 DEFAULT_FILE_STORAGE = 'django_dropbox_storage.storage.DropboxStorage'
@@ -322,4 +326,13 @@ FIREBASE_CONFIG = {
     # 'appId': "1:132715411999:web:1655dc229486eab8ba732a"
 }
 
-
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}

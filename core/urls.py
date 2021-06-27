@@ -13,6 +13,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
@@ -27,7 +31,27 @@ from django.contrib.auth import views as auth_views
 from rest_framework_simplejwt import views as jwt_views
 
 from users.views import UserRegister, UserProfile
-from rest_framework.schemas import get_schema_view
+from drf_yasg.views import get_schema_view
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
+swagger_url = [
+   url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+   url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
 
 api_patterns = [
     path("api/users/", include("users.urls"), name="api-users"),
@@ -40,9 +64,7 @@ api_patterns = [
 
 ]
 
-schema_view = get_swagger_view(title='Pastbin API', patterns=api_patterns)
-
-urlpatterns = api_patterns + [
+urlpatterns = api_patterns + swagger_url + [
     path('admin/', admin.site.urls),
 
     # chat urls
