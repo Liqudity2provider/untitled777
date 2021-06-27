@@ -28,7 +28,7 @@ SECRET_KEY = 'h6__pz5m$yk#s2l93$c6ux=%!r1hm%3h%5-^$pb9wzv5^gp*@3'
 DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
-MY_URLS = ['http://127.0.0.1:8000/', 'http://django-chat-test5050.herokuapp.com/']
+MY_URLS = ['http://127.0.0.1:8000/', 'http://django-5050.herokuapp.com/']
 ACTIVE_URL = 1
 # Application definition
 
