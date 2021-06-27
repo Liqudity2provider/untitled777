@@ -19,6 +19,7 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100)
     content = models.TextField()
+    d = models.TextField(max_length=2, blank=True)
     # category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     # image = models.ImageField(blank=True, upload_to='photos')
     # video = models.FileField(blank=True, upload_to='videos')
