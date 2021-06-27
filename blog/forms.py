@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
     Form for creating and updating Post model
     """
     title = forms.CharField()
-    category = forms.ModelChoiceField(required=False, queryset=Category.objects.all())
+    # category = forms.ModelChoiceField(required=False, queryset=Category.objects.all())
     image = forms.ImageField(required=False)
     video = forms.FileField(required=False)
     content = forms.CharField(
@@ -16,4 +16,5 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'category', 'content', 'image', 'video']
+        # fields = ['title', 'category', 'content', 'image', 'video']
+        fields = ['title', 'content',]
