@@ -22,7 +22,7 @@ class PostAdmin(admin.ModelAdmin):
     # list_editable = ['category']
     # fields = ['title', 'content', 'category', 'image', 'video', 'author', 'date_posted']
     # fields = ['title', 'content', 'image', 'video', 'author', 'date_posted']
-    fields = ['title', 'content', 'author', 'date_posted', 'd', 'image']
+    fields = ['title', 'content', 'author', 'date_posted', 'video', 'image']
     list_display_links = ['pk', 'title', ]
 
     def get_readonly_fields(self, request, obj=None):
