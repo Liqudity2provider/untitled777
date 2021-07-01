@@ -21,16 +21,6 @@ def auth_headers(token):
     }
 
 
-def update_form_data_with_media(request, form_data):
-    if request.FILES.get('video'):
-        url_to_video = save_video(request.FILES['video'])
-        form_data.update({'video': url_to_video})
-    if request.FILES.get('image'):
-        url_to_image = save_picture(request.FILES.get('image'))
-        form_data.update({'image': url_to_image})
-    return form_data
-
-
 def return_files_data_for_post(request):
     files_data = dict()
     image = request.FILES.get('image')

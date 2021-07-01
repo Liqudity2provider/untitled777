@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
 MY_URLS = ['http://127.0.0.1:8000/', 'http://django-5050.herokuapp.com/']
-ACTIVE_URL = 1
+ACTIVE_URL = 0
 # Application definition
 
 INSTALLED_APPS = [

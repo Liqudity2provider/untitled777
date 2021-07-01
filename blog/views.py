@@ -32,7 +32,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
-from .utils import save_picture, return_form_data_for_post, auth_headers, update_form_data_with_media, \
+from .utils import save_picture, return_form_data_for_post, auth_headers, \
     return_files_data_for_post
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
