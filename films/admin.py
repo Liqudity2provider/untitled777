@@ -91,7 +91,7 @@ class CommentAdmin(MPTTModelAdmin):
 
     def get_fields(self, request, obj=None):
         if request.user.is_superuser:
-            return ['film', 'author', 'parent', 'content', 'deleted']
+            return ['film', 'author', 'parent', 'content', 'deleted', 'reason_for_deleting']
         if obj.deleted:
             return ['reason_for_deleting']
         return ['film', 'author', 'parent', 'content']

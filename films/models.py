@@ -8,6 +8,9 @@ from requests import Response
 class Genre(models.Model):
     name = models.CharField(max_length=30, unique=True)
 
+    def __repr__(self):
+        return self.name
+
     def __str__(self):
         return self.name
 
@@ -22,6 +25,9 @@ class Film(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_link_of_image(self):
+        return self.image.url
 
     class Meta:
         ordering = ('-rating',)
