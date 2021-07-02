@@ -61,11 +61,13 @@ class FilmApiListView(generics.ListCreateAPIView):
         if genre_in_url:
             quer = list(Film.objects.filter(genres__name=genre_in_url))
 
-        list_of_films = [model_to_dict(film).update({
-            'genres': film.genres.all(),
-            'comments': film.comments.all()
-        })
-            for film in quer]
+        for film in quer:
+            f = model_to_dict(film)
+            f.update({
+                'genres': film.genres.all(),
+                'comments': film.comments.all()
+            })
+            list_of_films.append(f)
 
         res = []
 
