@@ -13,7 +13,7 @@ urlpatterns = [
     path('update_db/', UpdateFilmList.as_view(), name='update-db'),
     path('search/', csrf_exempt(FilmSearchView.as_view()), name="search"),
     path('api/', FilmApiListView.as_view(), name='api-films'),
-    path('api/<int:pk>', FilmApiDetailView.as_view(), name='api-film'),
+    path('film/api/<int:pk>', FilmApiDetailView.as_view(), name='api-film'),
     path('api/comment', CommentApiListView.as_view()),
     path('api/comment/<int:pk>', CommentApiDetailView.as_view()),
 ]

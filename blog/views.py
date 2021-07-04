@@ -51,7 +51,6 @@ class PostListView(APIView):
     template_name = 'blog/home.html'
 
     def get(self, request, *args, **kwargs):
-        print(request)
         token = refresh_token_or_redirect(request)
         if not isinstance(token, str):
             response = Response(template_name='blog/home.html', data={

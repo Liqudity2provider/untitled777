@@ -21,49 +21,49 @@
     "model": "films.genre",
     "pk": 1,
     "fields": {
-      "name": "приключения"
+      "name": "ужасы"
     }
   },
   {
     "model": "films.genre",
     "pk": 2,
     "fields": {
-      "name": "биографический"
+      "name": "военный"
     }
   },
   {
     "model": "films.genre",
     "pk": 3,
     "fields": {
-      "name": "эротика"
+      "name": "детектив"
     }
   },
   {
     "model": "films.genre",
     "pk": 4,
     "fields": {
-      "name": "фэнтези"
+      "name": "исторический"
     }
   },
   {
     "model": "films.genre",
     "pk": 5,
     "fields": {
-      "name": "ужасы"
+      "name": "криминал"
     }
   },
   {
     "model": "films.genre",
     "pk": 6,
     "fields": {
-      "name": "детский"
+      "name": "фантастика"
     }
   },
   {
     "model": "films.genre",
     "pk": 7,
     "fields": {
-      "name": "исторический"
+      "name": "боевик"
     }
   },
   {
@@ -77,42 +77,42 @@
     "model": "films.genre",
     "pk": 9,
     "fields": {
-      "name": "семейный"
+      "name": "биографический"
     }
   },
   {
     "model": "films.genre",
     "pk": 10,
     "fields": {
-      "name": "мюзикл"
+      "name": "музыка"
     }
   },
   {
     "model": "films.genre",
     "pk": 11,
     "fields": {
-      "name": "военный"
+      "name": "кинокомикс"
     }
   },
   {
     "model": "films.genre",
     "pk": 12,
     "fields": {
-      "name": "комедия"
+      "name": "фэнтези"
     }
   },
   {
     "model": "films.genre",
     "pk": 13,
     "fields": {
-      "name": "детектив"
+      "name": "приключения"
     }
   },
   {
     "model": "films.genre",
     "pk": 14,
     "fields": {
-      "name": "боевик"
+      "name": "детский"
     }
   },
   {
@@ -126,137 +126,112 @@
     "model": "films.genre",
     "pk": 16,
     "fields": {
-      "name": "криминал"
+      "name": "мюзикл"
     }
   },
   {
     "model": "films.genre",
     "pk": 17,
     "fields": {
-      "name": "фантастика"
+      "name": "эротика"
     }
   },
   {
     "model": "films.genre",
     "pk": 18,
     "fields": {
-      "name": "кинокомикс"
+      "name": "триллер"
     }
   },
   {
     "model": "films.genre",
     "pk": 19,
     "fields": {
-      "name": "спорт"
+      "name": "семейный"
     }
   },
   {
     "model": "films.genre",
     "pk": 20,
     "fields": {
-      "name": "триллер"
+      "name": "аниме"
     }
   },
   {
-    "model": "films.film",
-    "pk": 1,
+    "model": "films.genre",
+    "pk": 21,
     "fields": {
-      "name": "Доктор Лиза",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster92996_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_276638/doktor-liza",
-      "rating": 8.94,
-      "genres": [
-        2,
-        8
-      ]
+      "name": "комедия"
+    }
+  },
+  {
+    "model": "films.genre",
+    "pk": 23,
+    "fields": {
+      "name": "спорт"
     }
   },
   {
     "model": "films.film",
-    "pk": 2,
+    "pk": 67,
     "fields": {
       "name": "Душа",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster92748_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster92748_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_278004/soul",
       "rating": 8.47,
       "genres": [
-        1,
-        4,
-        6,
-        9,
         12,
-        15
+        13,
+        14,
+        15,
+        19,
+        21
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 3,
+    "pk": 69,
     "fields": {
       "name": "Лига справедливости Зака Снайдера",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98665_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster98665_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_287729/zack-snyders-justice-league",
-      "rating": 8.45,
+      "rating": 8.39,
       "genres": [
-        1,
-        4,
-        14,
-        17,
+        6,
+        7,
+        11,
+        12,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 70,
+    "fields": {
+      "name": "Комната",
+      "description": "",
+      "image": "/photos/poster94246_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_213307/room",
+      "rating": 8.1,
+      "genres": [
+        8,
         18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 4,
-    "fields": {
-      "name": "Отец",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93414_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_280473/the-father",
-      "rating": 8.4,
-      "genres": [
-        8,
-        12
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 5,
-    "fields": {
-      "name": "Комната",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94246_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_213307/room",
-      "rating": 8.16,
-      "genres": [
-        8,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 6,
-    "fields": {
-      "name": "Серебряные коньки",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster97095_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_275215/serebryanye-konki",
-      "rating": 7.91,
-      "genres": [
-        1,
-        7,
-        8
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 7,
+    "pk": 71,
     "fields": {
       "name": "Еще по одной",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94122_2_p.jpg",
+      "description": "",
+      "image": "/photos/poster94122_2_p.jpg",
       "link": "https://www.kinonews.ru//movie_277770/druk",
-      "rating": 7.86,
+      "rating": 7.84,
       "genres": [
         8
       ]
@@ -264,165 +239,222 @@
   },
   {
     "model": "films.film",
-    "pk": 8,
+    "pk": 72,
     "fields": {
       "name": "Довод",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94829_6_p.jpg",
+      "description": "",
+      "image": "/photos/poster94829_6_p.jpg",
       "link": "https://www.kinonews.ru//movie_277327/tenet",
-      "rating": 7.81,
-      "genres": [
-        14,
-        16,
-        17,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 9,
-    "fields": {
-      "name": "Никто",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster97261_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_284169/nobody",
       "rating": 7.8,
       "genres": [
-        14,
-        16,
-        20
+        5,
+        6,
+        7,
+        18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 10,
+    "pk": 73,
+    "fields": {
+      "name": "Серебряные коньки",
+      "description": "",
+      "image": "/photos/poster97095_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_275215/serebryanye-konki",
+      "rating": 7.78,
+      "genres": [
+        4,
+        8,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 74,
+    "fields": {
+      "name": "День курка",
+      "description": "",
+      "image": "/photos/poster98264_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_265540/boss-level",
+      "rating": 7.7,
+      "genres": [
+        6,
+        7,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 75,
     "fields": {
       "name": "Основатель",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93512_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster93512_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_213803/the-founder",
       "rating": 7.67,
       "genres": [
-        2,
-        7,
-        8
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 11,
-    "fields": {
-      "name": "На острие",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster91924_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_280894/na-ostrie",
-      "rating": 7.62,
-      "genres": [
-        8,
-        19
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 12,
-    "fields": {
-      "name": "День курка",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98264_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_265540/boss-level",
-      "rating": 7.56,
-      "genres": [
-        14,
-        17,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 13,
-    "fields": {
-      "name": "Последний богатырь 2: Корень зла",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster91741_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_276145/poslednij-bogatyr-koren-zla",
-      "rating": 7.33,
-      "genres": [
-        1,
         4,
-        6,
+        8,
         9
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 14,
+    "pk": 76,
     "fields": {
-      "name": "Райя и последний дракон",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98186_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_279439/raya-and-the-last-dragon",
-      "rating": 7.3,
+      "name": "На острие",
+      "description": "",
+      "image": "/photos/poster91924_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_280894/na-ostrie",
+      "rating": 7.62,
+      "genres": [
+        8,
+        23
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 77,
+    "fields": {
+      "name": "Никто",
+      "description": "",
+      "image": "/photos/poster97261_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_284169/nobody",
+      "rating": 7.53,
+      "genres": [
+        5,
+        7,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 78,
+    "fields": {
+      "name": "Звук металла",
+      "description": "",
+      "image": "/photos/poster100261_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_238623/the-sound-of-metal",
+      "rating": 7.5,
+      "genres": [
+        8,
+        10
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 79,
+    "fields": {
+      "name": "Тихое место 2",
+      "description": "",
+      "image": "/photos/poster99914_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_266303/a-quiet-place-2",
+      "rating": 7.44,
       "genres": [
         1,
-        4,
-        9,
-        10,
+        6,
+        8,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 80,
+    "fields": {
+      "name": "Истребитель демонов: Поезд \"Бесконечный\"",
+      "description": "",
+      "image": "/photos/poster99586_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_302279/kimetsu-no-yaiba-mugen-ressha-hen",
+      "rating": 7.38,
+      "genres": [
+        7,
         12,
-        14,
-        15
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 15,
-    "fields": {
-      "name": "Огонь",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster97096_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_272818/ogon",
-      "rating": 7.23,
-      "genres": [
-        1,
-        8
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 16,
-    "fields": {
-      "name": "Мой создатель",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93326_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_279274/archive",
-      "rating": 7.14,
-      "genres": [
-        17
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 17,
-    "fields": {
-      "name": "Годзилла против Конга",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98591_4_p.jpg",
-      "link": "https://www.kinonews.ru//movie_228647/godzilla-vs-kong",
-      "rating": 7.11,
-      "genres": [
-        1,
-        14,
-        17,
+        15,
         20
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 18,
+    "pk": 81,
     "fields": {
-      "name": "Земля кочевников",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98101_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_302253/nomadland",
-      "rating": 7.04,
+      "name": "Последний богатырь 2: Корень зла",
+      "description": "",
+      "image": "/photos/poster91741_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_276145/poslednij-bogatyr-koren-zla",
+      "rating": 7.32,
+      "genres": [
+        12,
+        13,
+        14,
+        19
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 82,
+    "fields": {
+      "name": "Гнев человеческий",
+      "description": "",
+      "image": "/photos/poster98965_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_285566/cash-truck",
+      "rating": 7.31,
+      "genres": [
+        7,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 83,
+    "fields": {
+      "name": "Круэлла",
+      "description": "",
+      "image": "/photos/poster99397_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_277190/cruella",
+      "rating": 7.28,
+      "genres": [
+        13,
+        14,
+        19,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 84,
+    "fields": {
+      "name": "Огонь",
+      "description": "",
+      "image": "/photos/poster97096_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_272818/ogon",
+      "rating": 7.25,
+      "genres": [
+        8,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 85,
+    "fields": {
+      "name": "Минари",
+      "description": "",
+      "image": "/photos/poster97952_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_294446/minari",
+      "rating": 7.2,
       "genres": [
         8
       ]
@@ -430,25 +462,92 @@
   },
   {
     "model": "films.film",
-    "pk": 19,
+    "pk": 86,
     "fields": {
-      "name": "Подольские курсанты",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93041_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_268098/ilinskiy-rubezh",
-      "rating": 7.0,
+      "name": "Райя и последний дракон",
+      "description": "",
+      "image": "/photos/poster98186_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_279439/raya-and-the-last-dragon",
+      "rating": 7.19,
       "genres": [
         7,
-        8,
-        11
+        12,
+        13,
+        15,
+        16,
+        19,
+        21
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 20,
+    "pk": 87,
+    "fields": {
+      "name": "Мой создатель",
+      "description": "",
+      "image": "/photos/poster93326_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_279274/archive",
+      "rating": 7.13,
+      "genres": [
+        6
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 88,
+    "fields": {
+      "name": "Годзилла против Конга",
+      "description": "",
+      "image": "/photos/poster98591_4_p.jpg",
+      "link": "https://www.kinonews.ru//movie_228647/godzilla-vs-kong",
+      "rating": 7.11,
+      "genres": [
+        6,
+        7,
+        13,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 89,
+    "fields": {
+      "name": "Земля кочевников",
+      "description": "",
+      "image": "/photos/poster98101_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_302253/nomadland",
+      "rating": 7.0,
+      "genres": [
+        8
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 90,
+    "fields": {
+      "name": "Заклятие 3: По воле дьявола",
+      "description": "",
+      "image": "/photos/poster100166_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_269991/the-conjuring-the-devil-made-me-do-it",
+      "rating": 6.94,
+      "genres": [
+        1,
+        3,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 91,
     "fields": {
       "name": "Огонек-Огниво",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93100_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster93100_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_286911/ogonek-ognivo",
       "rating": 6.91,
       "genres": [
@@ -458,56 +557,60 @@
   },
   {
     "model": "films.film",
-    "pk": 21,
+    "pk": 92,
+    "fields": {
+      "name": "Подольские курсанты",
+      "description": "",
+      "image": "/photos/poster93041_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_268098/ilinskiy-rubezh",
+      "rating": 6.84,
+      "genres": [
+        2,
+        4,
+        8
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 93,
     "fields": {
       "name": "Страна грез",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster96936_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster96936_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_261244/dreamland",
       "rating": 6.8,
       "genres": [
         8,
-        20
+        18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 22,
+    "pk": 94,
     "fields": {
       "name": "Мортал Комбат",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98298_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster98298_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_111063/mortal-kombat",
-      "rating": 6.77,
+      "rating": 6.7,
       "genres": [
-        1,
-        4,
-        14,
-        17,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 23,
-    "fields": {
-      "name": "Аферистка",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster97894_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_296752/i-care-a-lot",
-      "rating": 6.74,
-      "genres": [
+        6,
+        7,
         12,
-        16,
-        20
+        13,
+        18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 24,
+    "pk": 95,
     "fields": {
       "name": "Падение",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95363_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster95363_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_287972/falling",
       "rating": 6.67,
       "genres": [
@@ -517,68 +620,105 @@
   },
   {
     "model": "films.film",
-    "pk": 25,
+    "pk": 96,
     "fields": {
-      "name": "Глубже!",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95831_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_273059/glubzhe",
-      "rating": 6.63,
+      "name": "Те, кто желает мне смерти",
+      "description": "",
+      "image": "/photos/poster99340_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_285363/those-who-wish-me-dead",
+      "rating": 6.65,
       "genres": [
-        3,
-        12
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 26,
-    "fields": {
-      "name": "Майор Гром: Чумной Доктор",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95990_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_261247/mayor-grom-chumnoy-doktor",
-      "rating": 6.56,
-      "genres": [
-        1,
+        7,
         8,
-        14,
         18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 27,
+    "pk": 97,
     "fields": {
-      "name": "Гренландия",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93949_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_284763/greenland",
-      "rating": 6.53,
-      "genres": [
-        14
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 28,
-    "fields": {
-      "name": "Дичь",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95482_3_p.jpg",
-      "link": "https://www.kinonews.ru//movie_299126/freaky",
-      "rating": 6.43,
+      "name": "Аферистка",
+      "description": "",
+      "image": "/photos/poster97894_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_296752/i-care-a-lot",
+      "rating": 6.55,
       "genres": [
         5,
-        12,
-        20
+        18,
+        21
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 29,
+    "pk": 98,
+    "fields": {
+      "name": "Гренландия",
+      "description": "",
+      "image": "/photos/poster93949_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_284763/greenland",
+      "rating": 6.45,
+      "genres": [
+        7
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 99,
+    "fields": {
+      "name": "Глубже!",
+      "description": "",
+      "image": "/photos/poster95831_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_273059/glubzhe",
+      "rating": 6.44,
+      "genres": [
+        17,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 100,
+    "fields": {
+      "name": "Девушка, подающая надежды",
+      "description": "",
+      "image": "/photos/poster96700_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_282871/promising-young-woman",
+      "rating": 6.4,
+      "genres": [
+        5,
+        8,
+        18,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 101,
+    "fields": {
+      "name": "Дичь",
+      "description": "",
+      "image": "/photos/poster95482_3_p.jpg",
+      "link": "https://www.kinonews.ru//movie_299126/freaky",
+      "rating": 6.36,
+      "genres": [
+        1,
+        18,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 102,
     "fields": {
       "name": "Пугало",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster96330_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster96330_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_302254/pugalo",
       "rating": 6.36,
       "genres": [
@@ -588,228 +728,163 @@
   },
   {
     "model": "films.film",
-    "pk": 30,
-    "fields": {
-      "name": "Девушка, подающая надежды",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster96700_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_282871/promising-young-woman",
-      "rating": 6.33,
-      "genres": [
-        8,
-        12,
-        16,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 31,
+    "pk": 103,
     "fields": {
       "name": "В ожидании варваров",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94156_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster94156_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_271013/waiting-for-the-barbarians",
       "rating": 6.31,
       "genres": [
-        7,
+        4,
         8
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 32,
+    "pk": 104,
     "fields": {
       "name": "Только Бог простит",
-      "image": "https://www.kinonews.ru//insimgs/poster/poster33005_2_p.jpg",
+      "description": "",
+      "image": "/photos/poster33005_2_p.jpg",
       "link": "https://www.kinonews.ru//movie_100143/only-god-forgives",
       "rating": 6.3,
       "genres": [
+        5,
         8,
-        16,
-        20
+        18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 33,
+    "pk": 105,
     "fields": {
       "name": "Охота на Санту",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster96591_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster96591_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_289496/fatman",
       "rating": 6.29,
       "genres": [
-        4,
+        7,
         12,
-        14
+        21
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 34,
+    "pk": 106,
+    "fields": {
+      "name": "Форсаж 9",
+      "description": "",
+      "image": "/photos/poster99318_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_228625/fast-i-furious-9",
+      "rating": 6.27,
+      "genres": [
+        5,
+        7,
+        13,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 107,
+    "fields": {
+      "name": "Майор Гром: Чумной Доктор",
+      "description": "",
+      "image": "/photos/poster95990_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_261247/mayor-grom-chumnoy-doktor",
+      "rating": 6.24,
+      "genres": [
+        7,
+        8,
+        11,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 108,
     "fields": {
       "name": "Дьявол в деталях",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster97658_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster97658_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_279141/little-things",
       "rating": 6.13,
       "genres": [
+        5,
         8,
-        16,
-        20
+        18
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 35,
+    "pk": 109,
     "fields": {
       "name": "Семейка Крудс 2: Новоселье",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95677_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster95677_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_183526/the-croods-2",
       "rating": 6.05,
       "genres": [
-        1,
-        4,
-        9,
         12,
-        15
+        13,
+        15,
+        19,
+        21
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 36,
+    "pk": 110,
     "fields": {
       "name": "Дорогие товарищи!",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster96040_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster96040_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_280540/dorogie-tovarishchi",
       "rating": 6.0,
       "genres": [
-        7,
+        4,
         8
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 37,
+    "pk": 111,
+    "fields": {
+      "name": "Пила: Спираль",
+      "description": "",
+      "image": "/photos/poster99425_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_278234/saw-9",
+      "rating": 5.82,
+      "genres": [
+        1,
+        3,
+        5,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 112,
     "fields": {
       "name": "Чудо-женщина 2: 1984",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster97654_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster97654_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_260132/wonder-woman-2",
-      "rating": 5.75,
+      "rating": 5.73,
       "genres": [
-        1,
-        4,
-        14,
-        18
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 38,
-    "fields": {
-      "name": "Неистовый",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94152_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_287014/unhinged",
-      "rating": 5.5,
-      "genres": [
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 39,
-    "fields": {
-      "name": "Том и Джерри",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster97443_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_275965/tom-and-jerry",
-      "rating": 5.44,
-      "genres": [
-        1,
-        6,
-        9,
-        12
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 40,
-    "fields": {
-      "name": "Новые мутанты",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster92296_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_230994/x-men-the-new-mutants",
-      "rating": 5.32,
-      "genres": [
-        5,
-        14,
-        17,
-        18
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 41,
-    "fields": {
-      "name": "Поезд в Пусан 2: Полуостров",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94923_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_285066/bando",
-      "rating": 5.23,
-      "genres": [
-        5,
-        14,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 42,
-    "fields": {
-      "name": "Дедушка НЕлегкого поведения",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94862_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_255002/war-with-grandpa",
-      "rating": 5.0,
-      "genres": [
-        8,
-        9,
-        12
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 43,
-    "fields": {
-      "name": "Охотник на монстров",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster97777_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_270041/monster-hunter",
-      "rating": 4.93,
-      "genres": [
-        1,
-        4,
-        14
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 44,
-    "fields": {
-      "name": "Ведьмы",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95967_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_273644/the-witches",
-      "rating": 4.89,
-      "genres": [
-        1,
-        4,
-        9,
+        7,
+        11,
         12,
         13
       ]
@@ -817,137 +892,322 @@
   },
   {
     "model": "films.film",
-    "pk": 45,
+    "pk": 113,
     "fields": {
-      "name": "Конек-Горбунок",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster97552_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_258429/konek-gorbunok",
-      "rating": 4.71,
+      "name": "Неистовый",
+      "description": "",
+      "image": "/photos/poster94152_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_287014/unhinged",
+      "rating": 5.71,
+      "genres": [
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 114,
+    "fields": {
+      "name": "Поезд в Пусан 2: Полуостров",
+      "description": "",
+      "image": "/photos/poster94923_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_285066/bando",
+      "rating": 5.23,
+      "genres": [
+        1,
+        7,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 115,
+    "fields": {
+      "name": "Том и Джерри",
+      "description": "",
+      "image": "/photos/poster97443_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_275965/tom-and-jerry",
+      "rating": 5.21,
+      "genres": [
+        13,
+        14,
+        19,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 116,
+    "fields": {
+      "name": "Новые мутанты",
+      "description": "",
+      "image": "/photos/poster92296_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_230994/x-men-the-new-mutants",
+      "rating": 5.19,
       "genres": [
         1,
         6,
+        7,
+        11
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 117,
+    "fields": {
+      "name": "Охотник на монстров",
+      "description": "",
+      "image": "/photos/poster97777_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_270041/monster-hunter",
+      "rating": 4.95,
+      "genres": [
+        7,
+        12,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 118,
+    "fields": {
+      "name": "Ведьмы",
+      "description": "",
+      "image": "/photos/poster95967_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_273644/the-witches",
+      "rating": 4.89,
+      "genres": [
+        3,
+        12,
+        13,
+        19,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 119,
+    "fields": {
+      "name": "Кольская сверхглубокая",
+      "description": "",
+      "image": "/photos/poster95305_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_284445/kolskaya-sverhglubokaya",
+      "rating": 4.82,
+      "genres": [
+        1,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 120,
+    "fields": {
+      "name": "Конек-Горбунок",
+      "description": "",
+      "image": "/photos/poster97552_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_258429/konek-gorbunok",
+      "rating": 4.8,
+      "genres": [
+        13,
+        14,
+        19
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 121,
+    "fields": {
+      "name": "Мулан",
+      "description": "",
+      "image": "/photos/poster94876_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_250024/mulan",
+      "rating": 4.65,
+      "genres": [
+        7,
+        8,
+        13,
+        19
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 122,
+    "fields": {
+      "name": "Поступь хаоса",
+      "description": "",
+      "image": "/photos/poster96829_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_249409/chaos-walking",
+      "rating": 4.47,
+      "genres": [
+        6,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 123,
+    "fields": {
+      "name": "Агент Ева",
+      "description": "",
+      "image": "/photos/poster94180_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_286246/ava",
+      "rating": 4.46,
+      "genres": [
+        3,
+        5,
+        7,
+        8,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 124,
+    "fields": {
+      "name": "Дедушка НЕлегкого поведения",
+      "description": "",
+      "image": "/photos/poster94862_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_255002/war-with-grandpa",
+      "rating": 4.35,
+      "genres": [
+        8,
+        19,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 125,
+    "fields": {
+      "name": "Выбивая долги",
+      "description": "",
+      "image": "/photos/poster95788_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_267974/the-tax-collector",
+      "rating": 3.8,
+      "genres": [
+        5,
+        7,
+        8,
+        18
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 126,
+    "fields": {
+      "name": "Воздушный бой",
+      "description": "",
+      "image": "/photos/poster98292_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_292782/shadow-in-the-cloud",
+      "rating": 3.57,
+      "genres": [
+        1,
+        2,
+        7
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 127,
+    "fields": {
+      "name": "Вратарь Галактики",
+      "description": "",
+      "image": "/photos/poster94481_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_258740/vratar-galaktiki",
+      "rating": 3.28,
+      "genres": [
+        6,
+        7,
+        13
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 128,
+    "fields": {
+      "name": "Капоне. Лицо со шрамом",
+      "description": "",
+      "image": "/photos/poster93745_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_267726/fonzo",
+      "rating": 2.67,
+      "genres": [
+        5,
+        8,
         9
       ]
     }
   },
   {
     "model": "films.film",
-    "pk": 46,
-    "fields": {
-      "name": "Мулан",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94876_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_250024/mulan",
-      "rating": 4.62,
-      "genres": [
-        1,
-        8,
-        9,
-        14
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 47,
-    "fields": {
-      "name": "Агент Ева",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94180_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_286246/ava",
-      "rating": 4.46,
-      "genres": [
-        8,
-        13,
-        14,
-        16,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 48,
-    "fields": {
-      "name": "Поступь хаоса",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster96829_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_249409/chaos-walking",
-      "rating": 4.44,
-      "genres": [
-        1,
-        17
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 49,
-    "fields": {
-      "name": "Выбивая долги",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster95788_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_267974/the-tax-collector",
-      "rating": 3.8,
-      "genres": [
-        8,
-        14,
-        16,
-        20
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 50,
-    "fields": {
-      "name": "Воздушный бой",
-      "image": "https://www.kinonews.ru//insimgs/2021/poster/poster98292_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_292782/shadow-in-the-cloud",
-      "rating": 3.67,
-      "genres": [
-        5,
-        11,
-        14
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 51,
-    "fields": {
-      "name": "Вратарь Галактики",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster94481_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_258740/vratar-galaktiki",
-      "rating": 3.28,
-      "genres": [
-        1,
-        14,
-        17
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 52,
-    "fields": {
-      "name": "Капоне. Лицо со шрамом",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster93745_1_p.jpg",
-      "link": "https://www.kinonews.ru//movie_267726/fonzo",
-      "rating": 2.67,
-      "genres": [
-        2,
-        8,
-        16
-      ]
-    }
-  },
-  {
-    "model": "films.film",
-    "pk": 53,
+    "pk": 129,
     "fields": {
       "name": "Непосредственно Каха!",
-      "image": "https://www.kinonews.ru//insimgs/2020/poster/poster92267_1_p.jpg",
+      "description": "",
+      "image": "/photos/poster92267_1_p.jpg",
       "link": "https://www.kinonews.ru//movie_284760/neposredstvenno-kaha",
-      "rating": 2.0,
+      "rating": 1.92,
       "genres": [
-        12
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 130,
+    "fields": {
+      "name": "Форпост",
+      "description": "",
+      "image": "/photos/poster93327_1_p.jpg",
+      "link": "https://www.kinonews.ru//movie_273659/the-outpost",
+      "rating": 5.8,
+      "genres": [
+        2,
+        4,
+        7,
+        8
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 132,
+    "fields": {
+      "name": "Отец",
+      "description": "",
+      "image": "/photos/poster93414_1_p_3.jpg",
+      "link": "https://www.kinonews.ru//movie_280473/the-father",
+      "rating": 8.47,
+      "genres": [
+        8,
+        21
+      ]
+    }
+  },
+  {
+    "model": "films.film",
+    "pk": 133,
+    "fields": {
+      "name": "Доктор Лиза",
+      "description": "",
+      "image": "/photos/poster92996_1_p_5.jpg",
+      "link": "https://www.kinonews.ru//movie_276638/doktor-liza",
+      "rating": 8.94,
+      "genres": [
+        8,
+        9
       ]
     }
   },
@@ -955,84 +1215,18 @@
     "model": "films.comment",
     "pk": 1,
     "fields": {
-      "film": 1,
+      "film": 67,
       "author": 1,
       "parent": null,
       "email": "",
-      "content": "kskcsd",
-      "publish": "2021-05-18T23:40:12.045Z",
+      "content": "dkfj",
+      "publish": "2021-06-30T15:46:31.380Z",
       "status": true,
+      "deleted": false,
+      "reason_for_deleting": "dkjfnvkd",
       "lft": 1,
       "rght": 4,
       "tree_id": 1,
-      "level": 0
-    }
-  },
-  {
-    "model": "films.comment",
-    "pk": 2,
-    "fields": {
-      "film": 1,
-      "author": 1,
-      "parent": 1,
-      "email": "",
-      "content": "sdclsdc",
-      "publish": "2021-05-18T23:40:18.222Z",
-      "status": true,
-      "lft": 2,
-      "rght": 3,
-      "tree_id": 1,
-      "level": 1
-    }
-  },
-  {
-    "model": "films.comment",
-    "pk": 3,
-    "fields": {
-      "film": 1,
-      "author": 1,
-      "parent": null,
-      "email": "",
-      "content": "sdc",
-      "publish": "2021-06-02T13:31:16.112Z",
-      "status": true,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 2,
-      "level": 0
-    }
-  },
-  {
-    "model": "films.comment",
-    "pk": 4,
-    "fields": {
-      "film": 1,
-      "author": 1,
-      "parent": null,
-      "email": "",
-      "content": "11",
-      "publish": "2021-06-06T13:42:14.134Z",
-      "status": true,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 3,
-      "level": 0
-    }
-  },
-  {
-    "model": "films.comment",
-    "pk": 5,
-    "fields": {
-      "film": 1,
-      "author": 1,
-      "parent": null,
-      "email": "",
-      "content": "222",
-      "publish": "2021-06-06T13:42:38.363Z",
-      "status": true,
-      "lft": 1,
-      "rght": 2,
-      "tree_id": 4,
       "level": 0
     }
   }

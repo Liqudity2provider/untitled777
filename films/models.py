@@ -26,9 +26,6 @@ class Film(models.Model):
     def __str__(self):
         return self.name
 
-    def get_link_of_image(self):
-        return self.image.url
-
     class Meta:
         ordering = ('-rating',)
 

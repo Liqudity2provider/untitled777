@@ -28,4 +28,4 @@ class NewCommentForm(forms.ModelForm):
 
 
 class CommentAdminDeleteForm(forms.Form):
-    reason_for_deleting = forms.CharField(label='Reason for deleting', max_length=100)
+    reason_for_deleting = forms.CharField(label='Reason for deleting', max_length=100, widget=forms.Textarea)

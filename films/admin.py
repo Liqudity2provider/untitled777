@@ -7,6 +7,7 @@ from django.template.response import TemplateResponse, HttpResponse
 from django.urls import reverse, path
 from django.utils.html import format_html
 from mptt.admin import MPTTModelAdmin
+from rest_framework.generics import get_object_or_404
 
 from .forms import CommentAdminDeleteForm
 from .models import Film, Genre, Comment
@@ -42,19 +43,19 @@ class FilmAdmin(admin.ModelAdmin):
     list_editable = ['rating']
     fields = ['name', 'description', 'image', 'link', 'rating', 'genres']
     list_display_links = ['name']
+    change_list_template = "update_button.html"
 
     def film_comments(self, obj):
         info = (self.model._meta.app_label, 'comment')
         href = '/%s/%s/%s/' % ((self.admin_site.name,) + info)
 
         return format_html(
-            f"<a href='{href}?film_id={obj.id}'> Comments </a>"
+            f"<a href='{href}?film__id__exact={obj.id}'> Comments </a>"
         )
 
     def film_actions(self, obj):
         return format_html(
             f'<a class="button" href="{reverse("film-detail", kwargs={"pk": obj.pk})}">Detail</a>&nbsp;'
-            f'<a class="button" href="{reverse("update-db")}">Update</a>',
         )
 
     film_actions.short_description = 'Film Actions'
@@ -76,7 +77,9 @@ admin.site.register(Genre)
 
 class CommentAdmin(MPTTModelAdmin):
     list_display = ['content', 'film', 'author', 'deleted', 'delete_comment']
+    list_filter = ["film"]
     change_form_template = 'custom_change_form.html'
+
     def get_urls(self):
         urls = super().get_urls()
         my_urls = [
@@ -85,16 +88,17 @@ class CommentAdmin(MPTTModelAdmin):
         return my_urls + urls
 
     def delete_comment(self, obj):
-        return format_html(
-            f'<a class="button" href="{reverse("admin:delete_comment_view", kwargs={"pk": obj.pk})}"> Delete </a>&nbsp;'
-        )
+        if not obj.deleted:
+            return format_html(
+                f'<a class="button" href="{reverse("admin:delete_comment_view", kwargs={"pk": obj.pk})}"> Delete </a>&nbsp;'
+            )
 
     def get_fields(self, request, obj=None):
         if request.user.is_superuser:
             return ['film', 'author', 'parent', 'content', 'deleted', 'reason_for_deleting']
         if obj.deleted:
             return ['reason_for_deleting']
-        return ['film', 'author', 'parent', 'content']
+        return ['film', 'author', 'parent', 'content', 'deleted']
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
@@ -105,7 +109,7 @@ class CommentAdmin(MPTTModelAdmin):
             return self.fields
 
     def get_queryset(self, request):
-        film_id = request.GET.get('film_id')
+        film_id = request.GET.get('film__id__exact')
         if film_id:
             request.GET._mutable = True
 
@@ -115,8 +119,9 @@ class CommentAdmin(MPTTModelAdmin):
     def delete_comment_view(self, request, pk):
         if request.method == 'POST':
             form = CommentAdminDeleteForm(request.POST)
+            quer = self.get_queryset(request)
+            comment = get_object_or_404(quer, pk=pk)
             if form.is_valid():
-                comment = Comment.objects.get(pk=pk)
                 comment.reason_for_deleting = form.data['reason_for_deleting']
                 comment.save()
                 comment.delete()

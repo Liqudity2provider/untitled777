@@ -50,7 +50,6 @@ class ServiceUpdateFilmList(Service):
         for genre in list_genres:
             try:
                 if not Genre.objects.filter(name__contains=genre):
-                    x = Film.objects.get(pk=1)
                     new_genre = Genre(name=genre)
                     new_genre.save()
 
