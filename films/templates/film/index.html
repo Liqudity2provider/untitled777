@@ -5,11 +5,11 @@
             {% for i in data_films %}
                 <li>
                     <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ i.image }}" alt="Card image cap">
+                        <img class="card-img-top" src="{{ i.image_url }}" alt="Card image cap">
                         <div class="card-body">
                             <a href="{% url 'film-detail' i.id %}"><h5 class="card-title">{{ i.name }}</h5></a>
 
-                            <p class="card-text">Жанр - {{ i.genres.all|join:", " }}</p>
+                            <p class="card-text">Жанр - {{ i.genres|join:", " }}</p>
 
                             <p class="card-text">Рейтинг - {{ i.rating }}</p>
                             <a href="{{ i.link }}" class="btn btn-primary">Смотреть</a>

@@ -16,13 +16,9 @@ class PostAdmin(admin.ModelAdmin):
     Users from this group can edit content in Post (but cant edit author)
     """
 
-    # list_display = ['pk', 'title', 'category']
-    list_display = ['pk', 'title']
-    list_editable = []
-    # list_editable = ['category']
-    # fields = ['title', 'content', 'category', 'image', 'video', 'author', 'date_posted']
-    # fields = ['title', 'content', 'image', 'video', 'author', 'date_posted']
-    fields = ['title', 'content', 'author', 'date_posted']
+    list_display = ['pk', 'title', 'category']
+    list_editable = ['category']
+    fields = ['title', 'content', 'category', 'image', 'video', 'author', 'date_posted']
     list_display_links = ['pk', 'title', ]
 
     def get_readonly_fields(self, request, obj=None):
@@ -31,8 +27,7 @@ class PostAdmin(admin.ModelAdmin):
         elif has_role(request.user, PostModerator):
             return ['author']
         else:
-            # return ['title', 'content', 'category', 'image', 'video', 'author', 'date_posted']
-            return ['title', 'content', 'category', 'author', 'date_posted']
+            return ['title', 'content', 'category', 'image', 'video', 'author', 'date_posted']
 
 
 admin.site.register(Post, PostAdmin)

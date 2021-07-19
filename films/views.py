@@ -1,10 +1,15 @@
 import json
-from django.http import JsonResponse, HttpResponseNotFound
+
+import requests
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
+from requests import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
 
+from blog.views import path
 from films.models import Film, Genre
 from films.services import ServiceUpdateFilmList, ServiceFilmDetailView, AddNewComment
 from users.utils import refresh_token_or_redirect, user_from_token
@@ -13,32 +18,44 @@ from users.utils import refresh_token_or_redirect, user_from_token
 class FilmsMainPage(APIView):
 
     def get(self, request, **kwargs):
-      
         """:return films filtered by Genre name"""
-        token = refresh_token_or_redirect(request)
 
+        token = refresh_token_or_redirect(request)
+        params = ''
         if not isinstance(token, str):
             return redirect('logout')
 
+        if kwargs.get('params'):
+            params = '?genre=' + kwargs.get('params')
+
+        api_response = requests.get(
+            path + 'films/api/' + params,
+            headers=self.headers,
+            data=request.data
+        )
+
+        output = api_response.json()
+
         contex = {
-            'data_films': Film.objects.all(),
+            'data_films': output,
             'genres': Genre.objects.all(),
             'user': user_from_token(token),
         }
-        if kwargs.get('params'):
-            contex['data_films'] = Film.objects.filter(genres__name=kwargs.get('params'))
-
         return render(request, 'film/index.html', contex)
 
 
 class UpdateFilmList(CreateView):
     """delete films, genres and comments. Parse and adds from site"""
+    headers = {'Content-Type': 'application/json'}
 
     def get(self, request, **kwargs):
+        previous_page_url = request.META['HTTP_REFERER']
         status_ubdatedb = ServiceUpdateFilmList.execute({})
 
         if status_ubdatedb:
-            return render(request, 'film/done.html', {})
+            messages.success(request, 'DB has been updated')
+            return HttpResponseRedirect(previous_page_url)
+
         return HttpResponseNotFound('Error in updating database')
 
 

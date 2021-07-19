@@ -25,3 +25,7 @@ class NewCommentForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         Comment.objects.rebuild()
         return super(NewCommentForm, self).save(*args, **kwargs)
+
+
+class CommentAdminDeleteForm(forms.Form):
+    reason_for_deleting = forms.CharField(label='Reason for deleting', max_length=100, widget=forms.Textarea)

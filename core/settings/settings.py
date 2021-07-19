@@ -28,8 +28,8 @@ SECRET_KEY = 'h6__pz5m$yk#s2l93$c6ux=%!r1hm%3h%5-^$pb9wzv5^gp*@3'
 DEBUG = True
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
-MY_URLS = ['http://127.0.0.1:8000/', 'http://django-chat-test5050.herokuapp.com/']
-ACTIVE_URL = 1
+MY_URLS = ['http://127.0.0.1:8000/', 'http://django-5050.herokuapp.com/']
+ACTIVE_URL = 0
 # Application definition
 
 INSTALLED_APPS = [
@@ -62,6 +62,10 @@ INSTALLED_APPS = [
 
     # to store files in DropBox
     'django_dropbox_storage',
+
+    # swagger v2
+    # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
+    'drf_yasg',
 
 ]
 # DropBox
@@ -322,4 +326,13 @@ FIREBASE_CONFIG = {
     # 'appId': "1:132715411999:web:1655dc229486eab8ba732a"
 }
 
-
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}

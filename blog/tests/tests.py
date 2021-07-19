@@ -75,7 +75,7 @@ class PostTests(APITestCase):
         self.assertEqual(Post.objects.count(), 0)
         self.assertIn('token_not_valid', str(response.data))
 
-    def test_create_post_validaton_title(self):
+    def test_create_post_validation_title(self):
         """
         Testing POST request to create Post without title (using JWT token auth)
         """

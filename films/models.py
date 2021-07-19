@@ -1,10 +1,15 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.shortcuts import redirect
 from mptt.models import MPTTModel, TreeForeignKey
+from requests import Response
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=30, unique=True)
+
+    def __repr__(self):
+        return self.name
 
     def __str__(self):
         return self.name
@@ -13,7 +18,7 @@ class Genre(models.Model):
 class Film(models.Model):
     name = models.CharField(max_length=100, help_text="Film naming", unique=True)
     description = models.TextField(max_length=1000, blank=True)
-    image = models.CharField(max_length=500, )
+    image = models.ImageField(upload_to='photos')
     link = models.CharField(max_length=500, )
     rating = models.FloatField()
     genres = models.ManyToManyField(Genre)
@@ -49,4 +54,3 @@ class Comment(MPTTModel):
             children.delete()
         self.deleted = True
         self.save()
-        return self.deleted

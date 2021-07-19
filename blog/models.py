@@ -19,9 +19,9 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100)
     content = models.TextField()
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
-    # image = models.ImageField(blank=True, upload_to='photos')
-    # video = models.FileField(blank=True, upload_to='videos')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+    image = models.ImageField(blank=True, upload_to='photos', null=True)
+    video = models.FileField(blank=True, upload_to='videos', null=True)
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
 
