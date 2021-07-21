@@ -1,4 +1,6 @@
+import random
 import time
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 import jwt
 from datetime import datetime
@@ -128,3 +130,6 @@ def refresh_token_or_redirect(request):
         return {
             'error': 'token has been expired'
         }
+
+
+

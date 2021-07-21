@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+from django.core.mail import EmailMessage
 
 import requests
 from django.conf.global_settings import FILE_UPLOAD_TEMP_DIR
@@ -185,16 +186,18 @@ class PostUpdateView(APIView):
 
     def post(self, request, pk, *args, **kwargs):
         token = request.COOKIES.get('token')
+        headers = {
+            'Authorization': f'Bearer {token}',
+        }
 
         form_data = return_form_data_for_post(request)
+        files = return_files_data_for_post(request)
 
-        if request.FILES.get('image') or request.FILES.get('video'):
-            form_data = update_form_data_with_media(request, form_data)
-
-        requests.put(
+        response = requests.put(
             path + 'api/posts/' + str(pk) + '/',
-            headers=auth_headers(token),
-            data=json.dumps(form_data)
+            headers=headers,
+            data=form_data,
+            files=files
         )
 
         return redirect('blog-home')

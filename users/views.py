@@ -1,5 +1,8 @@
 import json
+import random
+
 import requests
+from django.core.mail import EmailMessage
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -10,7 +13,7 @@ from rest_framework.response import Response
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserLoginForm
 from django.contrib import messages
 from .serializers import UserSerializer
-from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect
+from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect, get_random_symbols_for_email_verif
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
 
@@ -53,6 +56,14 @@ class UserRegister(generics.CreateAPIView):
                 "form": UserRegisterForm(),
                 "messages": [*output.get('errors')]
             })
+
+        # verifyCode = get_random_symbols_for_email_verif()
+        #
+        # heading = 'Please confirm your email'
+        # messageContent = 'This is your verification message.' \
+        #                  'To activate your account please '
+        # msg = EmailMessage('heading', 'messageContent', settings.EMAIL_HOST_USER, ['alex.grechenko@gmail.com'])
+        # msg.send()
 
         return Response(template_name='users/login.html', data={
             "form": UserRegisterForm(),
