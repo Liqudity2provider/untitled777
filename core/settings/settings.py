@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from datetime import timedelta
-
+from decouple import config as config_env
 from pathlib import Path
 import os
 import dj_database_url
@@ -68,6 +68,8 @@ INSTALLED_APPS = [
     # swagger v2
     # 'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
     'drf_yasg',
+
+    'django_email_verification',  # used for email verification
 
 ]
 # DropBox
@@ -339,9 +341,26 @@ SWAGGER_SETTINGS = {
     }
 }
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
+
+def verified_callback(user):
+    user.is_active = True
+
+
+EMAIL_VERIFIED_CALLBACK = verified_callback
+
+# EMAIL_FROM_ADDRESS = os.environ.get("EMAIL")
+EMAIL_FROM_ADDRESS = 'grechenko.sasha@gmail.com'
+EMAIL_MAIL_SUBJECT = 'Confirm your email'
+EMAIL_MAIL_HTML = 'mail_body.html'
+EMAIL_MAIL_PLAIN = 'mail_body.txt'
+EMAIL_TOKEN_LIFE = 60 * 60
+EMAIL_PAGE_TEMPLATE = 'confirm_template.html'
+EMAIL_PAGE_DOMAIN = MY_URLS[ACTIVE_URL]
+
+# For Django Email Backend
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = config_env("EMAIL")
+EMAIL_HOST_PASSWORD = config_env("EMAIL_PASSWORD")
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get("EMAIL")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

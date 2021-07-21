@@ -1,9 +1,14 @@
 import random
 import time
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+import smtplib, ssl
 
 import jwt
 from datetime import datetime
+
+from django.template.loader import render_to_string
+from django_email_verification.token import default_token_generator
+
 import core
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -132,4 +137,38 @@ def refresh_token_or_redirect(request):
         }
 
 
+def send_email_custom(user, token, expiry, sender, domain, subject, mail_plain, mail_html):
+    domain += '/' if not domain.endswith('/') else ''
 
+    link = domain + 'email/' + token
+
+    context = {'link': link, 'expiry': expiry, 'user': user}
+
+    text = render_to_string(mail_plain, context)
+    port = settings.EMAIL_PORT
+
+    sender_email = settings.EMAIL_FROM_ADDRESS
+    receiver_email = user.email
+
+    context = ssl.create_default_context()
+    message = 'Confirm your email ' \
+              f'{text}'
+    with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+        server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        server.sendmail(sender_email, receiver_email, message)
+
+
+def send_confirmation_email(user):
+    expiry_ = None
+
+    token, expiry = default_token_generator.make_token(user, expiry_)
+
+    sender = settings.EMAIL_FROM_ADDRESS
+    domain = settings.EMAIL_PAGE_DOMAIN
+    subject = settings.EMAIL_MAIL_SUBJECT
+    mail_plain = settings.EMAIL_MAIL_PLAIN
+    mail_html = settings.EMAIL_MAIL_HTML
+
+    args = (user, token, expiry, sender, domain, subject, mail_plain, mail_html)
+
+    send_email_custom(*args)

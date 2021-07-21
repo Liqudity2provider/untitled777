@@ -27,6 +27,7 @@ django-colorfield==0.4.1
 django-crispy-forms==1.11.2
 django-discover-runner==1.0
 django-dropbox-storage-fixed==0.5.1
+django-email-verification==0.1.0
 django-environ==0.4.5
 django-filter==2.4.0
 django-flat-responsive==2.0
@@ -95,6 +96,7 @@ pytest==6.2.4
 pytest-cov==2.12.1
 pytest-django==4.3.0
 python-dateutil==1.5
+python-decouple==3.4
 python-dotenv==0.17.1
 python-jwt==2.0.1
 python3-openid==3.2.0

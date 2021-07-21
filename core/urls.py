@@ -16,6 +16,7 @@ Including another URLconf
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django_email_verification import urls as email_urls
 
 from django.conf.urls import url
 from django.contrib import admin
@@ -81,4 +82,7 @@ urlpatterns = api_patterns + swagger_url + [
     path('profile/', UserProfile.as_view(), name='profile'),
     path('login/', user_views.LoginView.as_view(), name='login'),
     path('logout/', user_views.LogoutView.as_view(), name='logout'),
+
+    path('email/', include(email_urls)),
+
 ]

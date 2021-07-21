@@ -1,8 +1,12 @@
 import json
 import random
+from django_email_verification import send_email
 
 import requests
+from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+from django_email_verification.confirm import _get_validated_field
+from django_email_verification.token import default_token_generator
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -13,7 +17,8 @@ from rest_framework.response import Response
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, UserLoginForm
 from django.contrib import messages
 from .serializers import UserSerializer
-from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect, get_random_symbols_for_email_verif
+from .utils import user_from_token, get_tokens_for_user, refresh_token_or_redirect, send_email_custom, \
+    send_confirmation_email
 
 path = settings.MY_URLS[settings.ACTIVE_URL]
 
@@ -49,21 +54,19 @@ class UserRegister(generics.CreateAPIView):
             headers=headers,
             data=json.dumps(form_data)
         )
-
         output = response.json()
+
         if output.get("errors"):
             return Response(template_name='users/register.html', data={
                 "form": UserRegisterForm(),
                 "messages": [*output.get('errors')]
             })
 
-        # verifyCode = get_random_symbols_for_email_verif()
-        #
-        # heading = 'Please confirm your email'
-        # messageContent = 'This is your verification message.' \
-        #                  'To activate your account please '
-        # msg = EmailMessage('heading', 'messageContent', settings.EMAIL_HOST_USER, ['alex.grechenko@gmail.com'])
-        # msg.send()
+        user = User.objects.get(username=output.get('username'))
+        user.is_active = False
+        user.save()
+
+        send_confirmation_email(user)
 
         return Response(template_name='users/login.html', data={
             "form": UserRegisterForm(),
@@ -127,6 +130,7 @@ class LoginView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
 
     def get(self, request, *args, **kwargs):
+
         return Response(template_name='users/login.html', data={
             "form": UserLoginForm
         })
