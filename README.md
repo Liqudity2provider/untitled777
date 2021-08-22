@@ -7,4 +7,4 @@ Django app capabilities:
 - creating comments to films, and tree structure of them
 - search films with ajax by title
 
-https://django-chat-test5050.herokuapp.com/
+https://django-5050.herokuapp.com/
