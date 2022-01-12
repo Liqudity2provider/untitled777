@@ -87,10 +87,9 @@ pycparser==2.20
 pycryptodome==3.4.3
 Pygments==2.9.0
 PyHamcrest==2.0.2
-PyJWT==2.1.0
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
-Pyrebase==3.0.27
+Pyrebase
 pytest==6.2.4
 pytest-cov==2.12.1
 pytest-django==4.3.0
