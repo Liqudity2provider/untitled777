@@ -39,8 +39,8 @@ django-role-permissions==3.1.1
 django-service-objects==0.7.0
 django-settings-export==1.2.1
 djangorestframework==3.12.4
-djangorestframework-jwt==1.11.0
-djangorestframework-simplejwt==4.7.1
+djangorestframework-jwt
+djangorestframework-simplejwt
 docutils==0.17.1
 drf-yasg==1.20.0
 dropbox==11.12.0
