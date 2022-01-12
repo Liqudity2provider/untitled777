@@ -9,7 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.sites.models import Site
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import TemporaryUploadedFile, InMemoryUploadedFile
+from django.core.files.uploadedfile import TemporaryUploadedFile, \
+    InMemoryUploadedFile
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
@@ -28,7 +29,8 @@ from core import settings
 from users.utils import user_from_token
 from .forms import PostForm
 from .models import Post
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, \
+    DeleteView
 
 from .permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
@@ -228,9 +230,10 @@ class PostDeleteView(APIView):
             data=json.dumps(form_data))
 
         output = api_response.json()
-        response = Response(template_name='blog/post_confirm_delete.html', data={
-            "post": output
-        })
+        response = Response(template_name='blog/post_confirm_delete.html',
+                            data={
+                                "post": output
+                            })
         response.set_cookie('token', token)
         return response
 
@@ -249,3 +252,9 @@ class AboutView(DetailView):
 
     def get(self, request, *args, **kwargs):
         return render(request, 'blog/about.html', {'title': 'About'})
+
+
+class FamilyView(DetailView):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'blog/family.html', {'title': 'Count of water glasses'})
